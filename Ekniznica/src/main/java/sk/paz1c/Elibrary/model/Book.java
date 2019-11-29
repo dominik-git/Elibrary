@@ -1,16 +1,23 @@
 package sk.paz1c.Elibrary.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Book {
 	
+	private long id;
 	private String name;
 	private String author;
 	private String description;
 	private String category;
-	private LocalDateTime birthDate;
+	private Date yearOfPublication;
 	
-	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -35,14 +42,17 @@ public class Book {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public LocalDateTime getBirthDate() {
-		return birthDate;
+	public Date getYearOfPublication() {
+		return yearOfPublication;
 	}
-	public void setBirthDate(LocalDateTime birthDate) {
-		this.birthDate = birthDate;
-	} 
-	
-	
+	public void setYearOfPublication(Date yearOfPublication) {
+		this.yearOfPublication = yearOfPublication;
+	}
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", description=" + description
+				+ ", category=" + category + ", yearOfPublication=" + yearOfPublication + "]";
+	}
 	
 	
 

@@ -4,6 +4,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import sk.paz1c.Elibrary.interfaces.BookDao;
+import sk.paz1c.Elibrary.interfaces.CategoryDao;
 import sk.paz1c.Elibrary.interfaces.ReaderDao;
 import sk.paz1c.Elibrary.interfaces.RentedBookDao;
 
@@ -12,13 +14,27 @@ public enum DaoFactory {
 
 	public JdbcTemplate jdbcTemplate;
 	private ReaderDao readerDao;
+	private BookDao bookDao;
 	private RentedBookDao rentedBookDao;
+	private CategoryDao categoryDao;
 
 	public ReaderDao getReaderDao() {
 		if (readerDao == null) {
 			readerDao = new MysqlReaderDao(getJdbcTemplate());
 		}
 		return readerDao;
+	}
+	public CategoryDao getCategoryDao() {
+		if(categoryDao == null) {
+			categoryDao = new MysqlCategoryDao(getJdbcTemplate());
+		}
+		return categoryDao;
+	}
+	public BookDao getBookDao() {
+		if (bookDao == null) {
+			bookDao = new MysqlBookDao(getJdbcTemplate());
+		}
+		return bookDao;
 	}
 
 	public RentedBookDao getRentedBookDao() {

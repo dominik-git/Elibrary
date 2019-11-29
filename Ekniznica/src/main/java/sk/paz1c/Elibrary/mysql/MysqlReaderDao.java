@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import sk.paz1c.Elibrary.exactor.ReaderRowMapper;
 import sk.paz1c.Elibrary.interfaces.ReaderDao;
+import sk.paz1c.Elibrary.model.Book;
 import sk.paz1c.Elibrary.model.Reader;
 
 public class MysqlReaderDao implements ReaderDao {
@@ -82,9 +83,46 @@ public class MysqlReaderDao implements ReaderDao {
 
 	@Override
 	public List<Reader> getAllReaders() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,"
+				+ " Reader.username as username, Reader.password as password,"
+				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, "
+				+ "Reader.gender as gender"
+				+ " FROM Reader ;";
+//		ResultSetExtractor<Map<String, List<String>>>
+		
+		List<Reader> result = jdbcTemplate.query(sql, new ResultSetExtractor<List<Reader>>() {
+
+			@SuppressWarnings("null")
+			@Override
+			public List<Reader> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<Reader> result = new ArrayList<Reader>();
+			
+				Reader reader = null;
+				while(rs.next()) {
+					reader = new Reader();
+					reader.setId(rs.getLong("id"));
+					reader.setName(rs.getString("name"));
+					reader.setUsername(rs.getString("username"));
+					reader.setSurname(rs.getString("surname"));
+					reader.setPassword(rs.getString("password"));
+					if(rs.getBoolean("isAdmin")) {
+						reader.setAdmin(1);
+					} else {
+						reader.setAdmin(0);
+					}
+					Timestamp timestamp = rs.getTimestamp("date_of_birth");
+					if (timestamp != null)
+						reader.setBirthDate(timestamp.toLocalDateTime());
+					result.add(reader);
+			}
+				return result;
+			}
+			
+		});
+		
+		return result;
+	}
 	}
 
 
-}
+

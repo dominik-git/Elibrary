@@ -31,7 +31,7 @@ public class MysqlRentedBookDao implements RentedBookDao {
 				"on Rented_book.id_reader = Reader.id " + 
 				"inner join Category " + 
 				"on Book.category_id = Category.id " + 
-				"where reader.id = 1;";
+				"where reader.id =" + id + ";";
 		
 //		ResultSetExtractor<Map<String, List<String>>>
 		

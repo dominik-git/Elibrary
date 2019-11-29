@@ -1,0 +1,62 @@
+package sk.paz1c.Elibrary.mysql;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
+
+import sk.paz1c.Elibrary.interfaces.CategoryDao;
+import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.Category;
+
+public class MysqlCategoryDao implements CategoryDao {
+	private JdbcTemplate jdbcTemplate;
+
+	public MysqlCategoryDao(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+
+	}
+
+	@Override
+	public Category getCategoryById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Category getCategoryByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Category> getAllCategories() {
+		String sql = "select * from category;";
+		List<Category> result = jdbcTemplate.query(sql, new ResultSetExtractor<List<Category>>() {
+
+			@SuppressWarnings("null")
+			@Override
+			public List<Category> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<Category> result = new ArrayList<Category>();
+
+				Category category = null;
+				while (rs.next()) {
+					category = new Category();
+					category.setId(rs.getLong("id"));
+					category.setName(rs.getString("name"));
+					result.add(category);
+				}
+				return result;
+			}
+
+		});
+
+		return result;
+	}
+}

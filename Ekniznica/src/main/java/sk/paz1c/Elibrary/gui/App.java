@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.mysql.DaoFactory;
+import sk.paz1c.Elibrary.mysql.MysqlBookDao;
 
 public class App extends Application{
 	public static Stage window;
@@ -22,7 +25,10 @@ public class App extends Application{
 	}
 
 	public static void main(String[] args) {
+		System.out.println(DaoFactory.INSTANCE.getCategoryDao().getAllCategories());
+		
 		launch(args);
+		
 
 	}
 }
