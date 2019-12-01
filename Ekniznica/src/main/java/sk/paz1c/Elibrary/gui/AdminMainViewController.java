@@ -25,7 +25,7 @@ public class AdminMainViewController {
 	@FXML
 	void switchScene(ActionEvent event) {
 		System.out.println("klik");
-		RentedBookController controller = new RentedBookController();
+		RentedBookAdminController controller = new RentedBookAdminController();
 		FXMLLoader fxmlLoader = 
 				new FXMLLoader(getClass().getResource("rentedBookView.fxml"));
 		fxmlLoader.setController(controller);
