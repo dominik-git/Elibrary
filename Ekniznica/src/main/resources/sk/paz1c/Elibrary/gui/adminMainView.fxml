@@ -9,7 +9,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="692.0" minWidth="722.0" prefHeight="692.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="vypozickyButton" layoutX="40.0" layoutY="26.0" mnemonicParsing="false" onAction="#switchScene" text="Books" />
-      <Button layoutX="324.0" layoutY="26.0" mnemonicParsing="false" text="Readers" />
+      <Button fx:id="readerViewButton" layoutX="324.0" layoutY="26.0" mnemonicParsing="false" onAction="#switchScene" text="Readers" />
       <Button layoutX="589.0" layoutY="26.0" mnemonicParsing="false" text="Rented Books" />
       <AnchorPane fx:id="mainContentPane" layoutX="14.0" layoutY="97.0" minHeight="587.0" minWidth="729.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
    </children>

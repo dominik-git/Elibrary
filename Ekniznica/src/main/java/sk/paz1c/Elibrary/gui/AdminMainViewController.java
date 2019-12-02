@@ -1,6 +1,7 @@
 package sk.paz1c.Elibrary.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,36 +24,55 @@ public class AdminMainViewController {
 	private Button vypozickyButton;
 
 	@FXML
+	private Button readerViewButton;
+	
+	private List<Button> buttons = new ArrayList<Button>();
+
+	@FXML
 	void switchScene(ActionEvent event) {
-		System.out.println("klik");
-		RentedBookAdminController controller = new RentedBookAdminController();
-		FXMLLoader fxmlLoader = 
-				new FXMLLoader(getClass().getResource("rentedBookView.fxml"));
+		
+		Button btn = (Button) event.getSource();
+		
+		String id = btn.getId();
+		System.out.println(id);
+		
+		if(id.equals("readerViewButton")) {
+			ReadersTableAdminController controller = new ReadersTableAdminController();
+			showView(controller,"readersAdminView.fxml");
+			
+		}else if(id.equals("vypozickyButton")) {
+			RentedBookAdminController controller = new RentedBookAdminController();
+			showView(controller,"rentedBookView.fxml");
+		}
+		disableButton(btn);
+	}
+
+	private void showView(Object controller, String view) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(view));
 		fxmlLoader.setController(controller);
 		Parent parent;
 		try {
 			parent = fxmlLoader.load();
 			mainContentPane.getChildren().clear();
 			mainContentPane.getChildren().add(parent);
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	private void disableButton(Button button) {
 		
-		
-		
-		
+	for (Button btn : buttons) {
+		btn.setDisable(false);
+	}
+	button.setDisable(true);
+	}
 
 	@FXML
 	void initialize() {
-//		System.out.println("init2");
-//		Button button = new Button("text");
-//		button.setMinWidth(100);
-//		button.setMinHeight(100);
-		
-		
+		buttons.add(readerViewButton);
+		buttons.add(vypozickyButton);
 
 	}
 

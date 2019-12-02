@@ -35,9 +35,10 @@ public class MysqlReaderDao implements ReaderDao {
 	public Reader getReaderByUsernameAndPassword(String username, String password) {
 
 		String sql = "SELECT * FROM Reader where username like ? and password like ? ;";
-		
+
 		try {
-			Reader reader = jdbcTemplate.queryForObject(sql, new Object[] { username, password },new RowMapper<Reader>() {
+			Reader reader = jdbcTemplate.queryForObject(sql, new Object[] { username, password },
+					new RowMapper<Reader>() {
 
 						public Reader mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -47,9 +48,7 @@ public class MysqlReaderDao implements ReaderDao {
 							reader.setSurname(rs.getString("surname"));
 							reader.setUsername(rs.getString("username"));
 							reader.setAdmin(rs.getInt("isAdmin"));
-							Timestamp timestamp = rs.getTimestamp("date_of_birth");
-							if (timestamp != null)
-								reader.setBirthDate(timestamp.toLocalDateTime());
+							reader.setBirthDate(rs.getDate("date_of_birth"));
 							reader.setGender(rs.getString("gender"));
 
 							return reader;
@@ -85,44 +84,39 @@ public class MysqlReaderDao implements ReaderDao {
 	public List<Reader> getAllReaders() {
 		String sql = "SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,"
 				+ " Reader.username as username, Reader.password as password,"
-				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, "
-				+ "Reader.gender as gender"
+				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender"
 				+ " FROM Reader ;";
 //		ResultSetExtractor<Map<String, List<String>>>
-		
+
 		List<Reader> result = jdbcTemplate.query(sql, new ResultSetExtractor<List<Reader>>() {
 
 			@SuppressWarnings("null")
 			@Override
 			public List<Reader> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<Reader> result = new ArrayList<Reader>();
-			
+
 				Reader reader = null;
-				while(rs.next()) {
+				while (rs.next()) {
 					reader = new Reader();
 					reader.setId(rs.getLong("id"));
 					reader.setName(rs.getString("name"));
 					reader.setUsername(rs.getString("username"));
 					reader.setSurname(rs.getString("surname"));
 					reader.setPassword(rs.getString("password"));
-					if(rs.getBoolean("isAdmin")) {
+					if (rs.getBoolean("isAdmin")) {
 						reader.setAdmin(1);
 					} else {
 						reader.setAdmin(0);
 					}
-					Timestamp timestamp = rs.getTimestamp("date_of_birth");
-					if (timestamp != null)
-						reader.setBirthDate(timestamp.toLocalDateTime());
+					reader.setBirthDate(rs.getDate("date_of_birth"));
+
 					result.add(reader);
-			}
+				}
 				return result;
 			}
-			
+
 		});
-		
+
 		return result;
 	}
-	}
-
-
-
+}

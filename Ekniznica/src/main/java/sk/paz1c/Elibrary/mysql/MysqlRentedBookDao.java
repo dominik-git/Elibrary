@@ -88,7 +88,7 @@ public class MysqlRentedBookDao implements RentedBookDao {
 
 	@Override
 	public RentedBook returnBook(RentedBook rentedBook) {
-		String sql = "UPDATE Rented_book " + "SET  is_returned = 1 " + "WHERE Rented_book.id  =  " + rentedBook.getId();
+		String sql = "UPDATE Rented_book " + "SET  is_returned = 1,date_of_return = current_date() " + "WHERE Rented_book.id  =  " + rentedBook.getId();
 		rentedBook.setReturned(1);
 		jdbcTemplate.update(sql);
 		return rentedBook;

@@ -1,5 +1,6 @@
 package sk.paz1c.Elibrary.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ public class Reader {
 	private String password = "";
 	private boolean isAdmin;
 	private String gender;
-	private LocalDateTime birthDate;
+	private Date birthDate;
+	private String email;
 	
 
 	public String getGender() {
@@ -24,11 +26,11 @@ public class Reader {
 		this.gender = gender;
 	}
 
-	public LocalDateTime getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDateTime birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -78,6 +80,15 @@ public class Reader {
 
 	public boolean getAdmin() {
 		return isAdmin;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
