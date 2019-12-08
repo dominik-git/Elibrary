@@ -12,10 +12,11 @@ public interface ReaderDao {
 	
 	public Reader getReaderByUserName(String username);
 	
-	public void saveReader(Reader reader);
+	public Reader saveReader(Reader reader);
 	
 	public void deleteUserById(long id);
 	
 	public List<Reader> getAllReaders();
+	public List<Reader> getAllReadersByFullName(String name);
 
 }

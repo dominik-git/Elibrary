@@ -22,23 +22,29 @@ import sk.paz1c.Elibrary.model.Book;
 import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 
+//responsible for rented books
 public class RentedBookAdminController {
 
 	@FXML
 	private TableView<RentedBook> rentedBookTableView;
 
+	// click on row
 	@FXML
 	void rowClicked(MouseEvent event) {
-		
+		// get index of clicked row
 		int index = rentedBookTableView.getSelectionModel().getSelectedIndex();
+		// Fulfil rentedBook object by values from clicked row
 		RentedBook rentedBook = rentedBookTableView.getItems().get(index);
-		if(rentedBook.getIsReturned() == true) {
+		// if book in clicked row was already returned then dont open modal and go out
+		// from func.
+		if (rentedBook.getIsReturned() == true) {
 			return;
 		}
+		// create ReturnBookModalController and pass rentedbook to constructor
 		ReturnBookModalController controller = new ReturnBookModalController(rentedBook);
+		// load view
 		try {
-			FXMLLoader fxmlLoader = 
-					new FXMLLoader(getClass().getResource("returnBookModal.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("returnBookModal.fxml"));
 			fxmlLoader.setController(controller);
 			Parent parent = fxmlLoader.load();
 			Scene scene = new Scene(parent);
@@ -49,19 +55,19 @@ public class RentedBookAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// refresh table
 		rentedBookTableView.refresh();
 	}
 
+	// initialize table
 	@FXML
 	void initialize() {
 
 		List<RentedBook> result = new ArrayList<RentedBook>();
-
+		// get all rented books
 		result = DaoFactory.INSTANCE.getRentedBookDao().getAllRenteBooksForAdmin();
-
-		for (RentedBook book : result) {
-			System.out.println(book.getIsReturned());
-		}
+		// make array list as observable list, that means if something will change you
+		// should see changes immediately change without refresh
 		rentedBookTableView.setItems(FXCollections.observableArrayList(result));
 
 		TableColumn<RentedBook, String> nameBookCol = new TableColumn<>("Name");

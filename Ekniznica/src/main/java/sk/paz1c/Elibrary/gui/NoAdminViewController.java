@@ -1,5 +1,6 @@
 package sk.paz1c.Elibrary.gui;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -13,35 +14,39 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.modelFx.BookFxModel;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 public class NoAdminViewController {
 
 	@FXML
-	private TableView<Book> rentedBookTable;
+	private TableView<RentedBook> rentedBookTable;
 
 	@FXML
 	void initialize() {
-		List<Book> result = new ArrayList<Book>();
+		List<RentedBook> result = new ArrayList<RentedBook>();
 
 		result = DaoFactory.INSTANCE.getRentedBookDao().getRentedBookById(1);
 
-		for (Book book : result) {
-			System.out.println(book.getName());
-		}
+		
 		rentedBookTable.setItems(FXCollections.observableArrayList(result));
 
-		TableColumn<Book, String> nameCol = new TableColumn<>("Name");
+		TableColumn<RentedBook, String> nameCol = new TableColumn<>("Name");
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		rentedBookTable.getColumns().add(nameCol);
 
-		TableColumn<Book, Integer> countCol = new TableColumn<>("Author");
-		countCol.setCellValueFactory(new PropertyValueFactory<>("author"));
-		rentedBookTable.getColumns().add(countCol);
 
-		TableColumn<Book, String> percentageCol = new TableColumn<>("Category");
+		TableColumn<RentedBook, String> percentageCol = new TableColumn<>("Category");
 		percentageCol.setCellValueFactory(new PropertyValueFactory<>("category"));
 		rentedBookTable.getColumns().add(percentageCol);
+		
+		TableColumn<RentedBook, Date> dateOfRentCol = new TableColumn<>("Date Of Rent");
+		dateOfRentCol.setCellValueFactory(new PropertyValueFactory<>("dateOfRent"));
+		rentedBookTable.getColumns().add(dateOfRentCol);
+
+		TableColumn<RentedBook, Date> deadlineCol = new TableColumn<>("Deadline");
+		deadlineCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+		rentedBookTable.getColumns().add(deadlineCol);
 	}
 }
