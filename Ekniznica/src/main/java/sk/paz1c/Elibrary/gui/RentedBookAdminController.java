@@ -40,6 +40,7 @@ public class RentedBookAdminController {
 		if (rentedBook.getIsReturned() == true) {
 			return;
 		}
+		if (event.getClickCount() == 2) {
 		// create ReturnBookModalController and pass rentedbook to constructor
 		ReturnBookModalController controller = new ReturnBookModalController(rentedBook);
 		// load view
@@ -55,8 +56,10 @@ public class RentedBookAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// refresh table
 		rentedBookTableView.refresh();
+		}
+		// refresh table
+	
 	}
 
 	// initialize table

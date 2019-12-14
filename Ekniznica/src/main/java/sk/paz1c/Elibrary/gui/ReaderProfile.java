@@ -1,15 +1,23 @@
 package sk.paz1c.Elibrary.gui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sk.paz1c.Elibrary.model.Reader;
 import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
@@ -49,6 +57,10 @@ public class ReaderProfile {
 	void openAddBookModal(ActionEvent event) {
 		
 	}
+	@FXML
+	void rowClicked(MouseEvent event) {
+	
+	}
 
 	
 	@FXML
@@ -87,6 +99,40 @@ public class ReaderProfile {
 		dateOfReturnCol.setCellValueFactory(new PropertyValueFactory<>("dateOfReturn"));
 		rentedBookTable.getColumns().add(dateOfReturnCol);
 		
+		// add click listener on row
+		rentedBookTable.setOnMouseClicked((MouseEvent event) -> {
+					if (event.getButton().equals(MouseButton.PRIMARY)) {
+						System.out.println("click");
+						// check if we do double click on row
+						if (event.getClickCount() == 2) {
+							// get index of clicked row
+							int index = rentedBookTable.getSelectionModel().getSelectedIndex();
+							// Fulfil rentedBook object by values from clicked row
+							RentedBook rentedBook = rentedBookTable.getItems().get(index);
+							// if book in clicked row was already returned then dont open modal and go out
+							// from func.
+							if (rentedBook.getIsReturned() == true) {
+								return;
+							}
+							// create ReturnBookModalController and pass rentedbook to constructor
+							ReturnBookModalController controller = new ReturnBookModalController(rentedBook);
+							// load view
+							try {
+								FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("returnBookModal.fxml"));
+								fxmlLoader.setController(controller);
+								Parent parent = fxmlLoader.load();
+								Scene scene = new Scene(parent);
+								Stage modalStage = new Stage();
+								modalStage.setScene(scene);
+								modalStage.initModality(Modality.APPLICATION_MODAL);
+								modalStage.showAndWait();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+
+					}
+				});
 		
 
 	}
