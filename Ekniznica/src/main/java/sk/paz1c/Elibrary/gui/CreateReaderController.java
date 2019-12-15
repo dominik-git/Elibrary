@@ -97,7 +97,6 @@ public class CreateReaderController extends ReadersTableAdminController {
 					readerFxModel.setGender(gender);
 				}
 			}
-
 		});
 
 		// two way binding, so basically it means that you are writing something to

@@ -83,7 +83,7 @@ public class MysqlReaderDao implements ReaderDao {
 			// INSERT
 			SimpleJdbcInsert sjinsert = new SimpleJdbcInsert(jdbcTemplate);
 			sjinsert.withTableName("Reader");
-			sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender");
+			sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender","email");
 			sjinsert.usingGeneratedKeyColumns("id");
 
 			Map<String, Object> values = new HashMap<String, Object>();

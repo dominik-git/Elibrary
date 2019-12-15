@@ -26,6 +26,9 @@ public class AdminMainViewController {
 	@FXML
 	private Button readerViewButton;
 	
+	@FXML
+    private Button booksViewButton;
+	
 	private List<Button> buttons = new ArrayList<Button>();
 
 	@FXML
@@ -44,6 +47,10 @@ public class AdminMainViewController {
 			RentedBookAdminController controller = new RentedBookAdminController();
 			showView(controller,"rentedBookView.fxml");
 		}
+		else if(id.equals("booksViewButton")) {
+			BooksAdminController controller = new BooksAdminController();
+			showView(controller,"booksAdminView.fxml");
+		}
 		disableButton(btn);
 	}
 
@@ -55,7 +62,6 @@ public class AdminMainViewController {
 			parent = fxmlLoader.load();
 			mainContentPane.getChildren().clear();
 			mainContentPane.getChildren().add(parent);
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,6 +79,7 @@ public class AdminMainViewController {
 	void initialize() {
 		buttons.add(readerViewButton);
 		buttons.add(vypozickyButton);
+	    buttons.add(booksViewButton);
 
 	}
 

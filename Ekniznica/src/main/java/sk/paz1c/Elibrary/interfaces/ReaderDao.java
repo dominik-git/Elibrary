@@ -17,6 +17,7 @@ public interface ReaderDao {
 	public void deleteUserById(long id);
 	
 	public List<Reader> getAllReaders();
+	
 	public List<Reader> getAllReadersByFullName(String name);
 
 }
