@@ -13,9 +13,11 @@ public interface BookDao {
 	
 	public List<Book> getBooksByCategoryId(long categoryId);
 	
-	public void addBook(Book book);
+	public Book addBook(Book book);
 	
 	public void deleteBookById(long id);
 	
 	public List<Book> getAllBooks();
+	
+	public List<Book> getAllBooksByName(String name);
 }
