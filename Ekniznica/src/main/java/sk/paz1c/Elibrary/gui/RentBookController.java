@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.Reader;
+import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 public class RentBookController {
 
@@ -20,6 +22,9 @@ public class RentBookController {
 
     @FXML
     private Label authorLabel;
+    
+    @FXML
+    private Label categoryLabel;
 
     @FXML
     private TextArea desctiptionTF;
@@ -41,21 +46,23 @@ public class RentBookController {
     	this.book.setAuthor(book.getAuthor());
     	this.book.setId(book.getId());
     }
-
+//Long.getLong(rentBookField.getText())
     @FXML
     void rentBook(ActionEvent event) {
-    	Long readerId = Long.parseLong(rentBookField.getText());
-    	System.out.println(readerId);
+    	DaoFactory.INSTANCE.getRentedBookDao().addRentedBook(Long.parseLong(rentBookField.getText()),book.getId());
+    	rentButton.getScene().getWindow().hide();
     }
 
     @FXML
     void initialize() {
     	bookLabel.setText(book.getName());
     	authorLabel.setText(book.getAuthor());
+    	categoryLabel.setText(book.getCategory());
     	desctiptionTF.setText(book.getDescription());
     	desctiptionTF.setEditable(false);
     	//desctiptionTF.setLineWrap(true);
     	desctiptionTF.setWrapText(true);
+    	
 
     	
     }

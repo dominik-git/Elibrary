@@ -1,8 +1,11 @@
 package sk.paz1c.Elibrary.mysql;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,39 +153,11 @@ public class MysqlRentedBookDao implements RentedBookDao {
 	}
 
 	@Override
-	public void addRentedBook(int userId, int bookId) {
-	/*				
-					SimpleJdbcInsert sjinsert = new SimpleJdbcInsert(jdbcTemplate);
-					sjinsert.withTableName("RentedBook");
-					sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender","email");
-					sjinsert.usingGeneratedKeyColumns("id");
-
-					Map<String, Object> values = new HashMap<String, Object>();
-					values.put("name", reader.getName());
-					values.put("surname", reader.getSurname());
-					values.put("username", reader.getUsername());
-					values.put("password", reader.getPassword());
-					values.put("isAdmin", reader.getAdmin());
-					values.put("date_of_birth", reader.getBirthDate());
-					values.put("gender", reader.getGender());
-					values.put("email", reader.getEmail());
-
-					long id = sjinsert.executeAndReturnKey(values).longValue();
-					reader.setId(id);
-				}
-//				} else {
-//					//UPDATE
-//					String sql = "UPDATE subject SET name = ? WHERE id = " + subject.getId();
-//					jdbcTemplate.update(sql, subject.getName());
-//					String deleteSql = "DELETE FROM student_at_subject WHERE subject_id = "
-//										+ subject.getId();
-//					jdbcTemplate.update(deleteSql);
-//					insertStudents(subject);
-//				}
-			
-
-			}
-		*/
+	public void addRentedBook(Long userId, Long bookId) {
+		Date date = java.sql.Date.valueOf(LocalDate.now());
+		Date returnDate = java.sql.Date.valueOf(LocalDate.now().plusMonths(2));
+		String sql = "INSERT INTO `elibrary`.`rented_book` (`id_reader`, `id_book`, `date_of_rent`, `deadline`) VALUES ('"+ userId + "', '"+bookId+"', "+ date + ", "+returnDate+");";
+		jdbcTemplate.update(sql);
 	}
 
 }
