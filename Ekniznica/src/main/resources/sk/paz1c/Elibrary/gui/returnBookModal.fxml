@@ -11,13 +11,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="63.0" layoutY="14.0" text="Would you like to return book ? ">
+      <Label layoutX="63.0" layoutY="14.0" text="Would you like to return book  ? ">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="yesButton" layoutX="63.0" layoutY="169.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="27.0" prefWidth="71.0" text="YES" />
-      <Button fx:id="noButton" layoutX="264.0" layoutY="169.0" mnemonicParsing="false" onAction="#goBack" prefHeight="27.0" prefWidth="71.0" text="NO" />
+      <Button fx:id="yesButton" layoutX="63.0" layoutY="169.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="27.0" prefWidth="71.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-text-fill: white;" text="YES" />
+      <Button fx:id="noButton" layoutX="264.0" layoutY="169.0" mnemonicParsing="false" onAction="#goBack" prefHeight="27.0" prefWidth="71.0" style="-fx-background-color: red; -fx-text-fill: white; -fx-border-color: #d43f3a;" text="NO" />
       <Label fx:id="nameOfBookLabel" layoutX="63.0" layoutY="59.0" text="Name of book">
          <font>
             <Font size="18.0" />

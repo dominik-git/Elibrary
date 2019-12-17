@@ -24,14 +24,13 @@ import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 public class ReaderProfile {
 	
+	private Reader reader;
+	private ObservableList<RentedBook> rentedBooks;
+	
 	public ReaderProfile(Reader reader) {
 		this.reader = reader;
-		
-		List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookById(reader.getId());
-		rentedBooks = FXCollections.observableArrayList(result);
 	}
-	private Reader reader;
-	private ObservableList<RentedBook> rentedBooks = FXCollections.observableArrayList();
+	
 	
 	@FXML
 	private Label fullNameLabel;
@@ -69,6 +68,8 @@ public class ReaderProfile {
 		dateOfBirthLabel.setText(reader.getBirthDate().toString());
 		userNameLabel.setText(reader.getUsername());
 		
+		List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookById(reader.getId());
+		rentedBooks = FXCollections.observableArrayList(result);
 		rentedBookTable.setItems(rentedBooks);
 
 		TableColumn<RentedBook, String> nameBookCol = new TableColumn<>("Name");
@@ -115,7 +116,7 @@ public class ReaderProfile {
 								return;
 							}
 							// create ReturnBookModalController and pass rentedbook to constructor
-							ReturnBookModalController controller = new ReturnBookModalController(rentedBook);
+							ReturnBookModalController controller = new ReturnBookModalController(rentedBook,rentedBooks,"reader");
 							// load view
 							try {
 								FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("returnBookModal.fxml"));
@@ -129,6 +130,7 @@ public class ReaderProfile {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
+							rentedBookTable.refresh();
 						}
 
 					}

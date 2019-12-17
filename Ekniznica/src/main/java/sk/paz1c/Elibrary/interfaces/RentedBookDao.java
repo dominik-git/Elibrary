@@ -8,7 +8,8 @@ import sk.paz1c.Elibrary.model.RentedBook;
 public interface RentedBookDao {
 
 	public List<RentedBook> getRentedBookById(long id);
-	public List<RentedBook> getAllRenteBooksForAdmin();
+	public List<RentedBook> getAllRentedBooksForAdmin();
+	public List<RentedBook> getAlReturnedBooksForAdmin();
 	public RentedBook returnBook(RentedBook rentedBook);
 	public List<RentedBook> getNonReturnedRentedBookById(long id);
 	public void addRentedBook(int userId, int bookId);

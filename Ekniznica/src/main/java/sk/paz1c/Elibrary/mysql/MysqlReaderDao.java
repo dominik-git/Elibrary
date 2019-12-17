@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import sk.paz1c.Elibrary.exactor.ReaderRowMapper;
 import sk.paz1c.Elibrary.interfaces.ReaderDao;
 import sk.paz1c.Elibrary.model.Book;
 import sk.paz1c.Elibrary.model.Reader;
@@ -37,7 +36,7 @@ public class MysqlReaderDao implements ReaderDao {
 	@Override
 	public Reader getReaderByUsernameAndPassword(String username, String password) {
 
-		String sql = "SELECT * FROM Reader where username like ? and password like ? ;";
+		String sql = "SELECT * FROM Reader where username = ? and password = ? ;";
 
 		try {
 			Reader reader = jdbcTemplate.queryForObject(sql, new Object[] { username, password },

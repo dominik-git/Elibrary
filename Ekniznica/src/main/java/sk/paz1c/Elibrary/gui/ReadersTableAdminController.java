@@ -58,16 +58,16 @@ public class ReadersTableAdminController {
 		openCreateReaderModal();
 	}
 
-	public ReadersTableAdminController() {
-		List<Reader> result = DaoFactory.INSTANCE.getReaderDao().getAllReaders();
-		readers = FXCollections.observableArrayList(result);
-	}
+//	public ReadersTableAdminController() {
+//		List<Reader> result = DaoFactory.INSTANCE.getReaderDao().getAllReaders();
+//		readers = FXCollections.observableArrayList(result);
+//	}
 
 	@FXML
 	void initialize() {
-
+		List<Reader> result = DaoFactory.INSTANCE.getReaderDao().getAllReaders();
+		readers = FXCollections.observableArrayList(result);
 		// get all readers
-		readers = FXCollections.observableArrayList(DaoFactory.INSTANCE.getReaderDao().getAllReaders());
 		// make arrayList as observable list
 		readersTableView.setItems(readers);
 		// create table column

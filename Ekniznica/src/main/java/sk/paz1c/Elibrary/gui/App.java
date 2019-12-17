@@ -1,5 +1,9 @@
 package sk.paz1c.Elibrary.gui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +33,10 @@ public class App extends Application{
 	}
 
 	public static void main(String[] args) {
+		
+//		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//		Date date = new Date();
+//		System.out.println(date.);
 		launch(args);
 	}
 }

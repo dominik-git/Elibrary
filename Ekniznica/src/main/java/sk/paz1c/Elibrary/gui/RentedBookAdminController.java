@@ -6,25 +6,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.Reader;
 import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 //responsible for rented books
 public class RentedBookAdminController {
+	
+	private ObservableList<RentedBook> rentedBooks = FXCollections.observableArrayList();
+	private ObservableList<RentedBook> returnedBooks = FXCollections.observableArrayList();
 
+	@FXML
+    private Button returnedButton;
+
+    @FXML
+    private Button rentedButton;
+
+
+    @FXML
+    void loadReturned(ActionEvent event) {
+    	List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getAlReturnedBooksForAdmin();
+		returnedBooks = FXCollections.observableArrayList(result);
+		returnedButton.setDisable(true);
+		rentedButton.setDisable(false);
+		rentedBookTableView.setItems(returnedBooks);
+		
+    }
+    @FXML
+    void loadRented(ActionEvent event) {
+    	List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getAllRentedBooksForAdmin();
+		rentedBooks = FXCollections.observableArrayList(result);
+		returnedButton.setDisable(false);
+		rentedButton.setDisable(true);
+		rentedBookTableView.setItems(rentedBooks);
+    }
 	@FXML
 	private TableView<RentedBook> rentedBookTableView;
 
@@ -40,9 +67,9 @@ public class RentedBookAdminController {
 		if (rentedBook.getIsReturned() == true) {
 			return;
 		}
-		if (event.getClickCount() == 2) {
+		if (event.getClickCount() == 2 ) {
 		// create ReturnBookModalController and pass rentedbook to constructor
-		ReturnBookModalController controller = new ReturnBookModalController(rentedBook);
+		ReturnBookModalController controller = new ReturnBookModalController(rentedBook,rentedBooks,"admin");
 		// load view
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("returnBookModal.fxml"));
@@ -61,17 +88,20 @@ public class RentedBookAdminController {
 		// refresh table
 	
 	}
+	
 
 	// initialize table
 	@FXML
 	void initialize() {
+		
+		List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getAllRentedBooksForAdmin();
+		rentedBooks = FXCollections.observableArrayList(result);
 
-		List<RentedBook> result = new ArrayList<RentedBook>();
-		// get all rented books
-		result = DaoFactory.INSTANCE.getRentedBookDao().getAllRenteBooksForAdmin();
 		// make array list as observable list, that means if something will change you
 		// should see changes immediately change without refresh
-		rentedBookTableView.setItems(FXCollections.observableArrayList(result));
+		rentedBookTableView.setItems(rentedBooks);
+		rentedButton.setDisable(true);
+		
 
 		TableColumn<RentedBook, String> nameBookCol = new TableColumn<>("Name");
 		nameBookCol.setCellValueFactory(new PropertyValueFactory<>("name"));
