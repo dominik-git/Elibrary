@@ -4,12 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.paz1c.Elibrary.interfaces.RentedBookDao;
 import sk.paz1c.Elibrary.model.Book;
@@ -144,6 +147,42 @@ public class MysqlRentedBookDao implements RentedBookDao {
 		rentedBook.setReturned(1);
 		jdbcTemplate.update(sql);
 		return rentedBook;
+	}
+
+	@Override
+	public void addRentedBook(int userId, int bookId) {
+	/*				
+					SimpleJdbcInsert sjinsert = new SimpleJdbcInsert(jdbcTemplate);
+					sjinsert.withTableName("RentedBook");
+					sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender","email");
+					sjinsert.usingGeneratedKeyColumns("id");
+
+					Map<String, Object> values = new HashMap<String, Object>();
+					values.put("name", reader.getName());
+					values.put("surname", reader.getSurname());
+					values.put("username", reader.getUsername());
+					values.put("password", reader.getPassword());
+					values.put("isAdmin", reader.getAdmin());
+					values.put("date_of_birth", reader.getBirthDate());
+					values.put("gender", reader.getGender());
+					values.put("email", reader.getEmail());
+
+					long id = sjinsert.executeAndReturnKey(values).longValue();
+					reader.setId(id);
+				}
+//				} else {
+//					//UPDATE
+//					String sql = "UPDATE subject SET name = ? WHERE id = " + subject.getId();
+//					jdbcTemplate.update(sql, subject.getName());
+//					String deleteSql = "DELETE FROM student_at_subject WHERE subject_id = "
+//										+ subject.getId();
+//					jdbcTemplate.update(deleteSql);
+//					insertStudents(subject);
+//				}
+			
+
+			}
+		*/
 	}
 
 }
