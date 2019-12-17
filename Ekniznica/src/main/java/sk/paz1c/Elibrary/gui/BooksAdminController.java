@@ -23,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 import sk.paz1c.Elibrary.model.Book;
 import sk.paz1c.Elibrary.model.Category;
 import sk.paz1c.Elibrary.model.Reader;
@@ -47,6 +48,20 @@ public class BooksAdminController {
 	void onClickAddBookButton(ActionEvent event) {
 		openBookModal();
 	}
+	 @FXML
+	 void searchBook(ActionEvent event) {
+		 String searchedName = searchTextField.getText();
+			System.out.println(searchedName + " search name");
+			List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooksByName(searchedName);
+			books = FXCollections.observableArrayList(result);
+			booksTableView.setItems(books);
+			System.out.println(result);
+	 }
+	 @FXML
+	    private Button searchButton;
+
+	    @FXML
+	    private TextField searchTextField;
 
 	@FXML
 	void onClickAddCategory(ActionEvent event) {
