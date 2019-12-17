@@ -14,23 +14,21 @@ public class App extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		window = primaryStage;
 		LoginController controller = new LoginController();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginView.fxml"));
 		fxmlLoader.setController(controller);
 		Parent parent = fxmlLoader.load();
+		
 		Scene scene = new Scene(parent);
+//		scene.getStylesheets().add(App.class.getResource("Main.css").toExternalForm());
+		
 		window.setScene(scene);
 		window.show();
 	}
 
 	public static void main(String[] args) {
-
-		System.out.println(DaoFactory.INSTANCE.getCategoryDao().getAllCategories());
-
 		launch(args);
-		
-		
-
 	}
 }

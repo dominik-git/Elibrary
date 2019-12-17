@@ -3,13 +3,16 @@ package sk.paz1c.Elibrary.mysql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.paz1c.Elibrary.interfaces.BookDao;
 import sk.paz1c.Elibrary.model.Book;
@@ -97,9 +100,27 @@ public class MysqlBookDao implements BookDao {
 	}
 
 	@Override
-	public void addBook(Book book) {
-		// TODO Auto-generated method stub
+	public Book addBook(Book book) {
+		if (book == null)
+			return null;
+		if (book.getId() == null) {
+			// INSERT
+			SimpleJdbcInsert sjinsert = new SimpleJdbcInsert(jdbcTemplate);
+			sjinsert.withTableName("Book");
+			sjinsert.usingColumns("name", "author", "description", "category_id", "year_of_publication");
+			sjinsert.usingGeneratedKeyColumns("id");
 
+			Map<String, Object> values = new HashMap<String, Object>();
+			values.put("name", book.getName());
+			values.put("author", book.getAuthor());
+			values.put("description", book.getDescription());
+			values.put("year_of_publication", book.getYearOfPublication());
+			int categoryId = Integer.parseInt(book.getCategory());
+			values.put("category_id", categoryId);
+			long id = sjinsert.executeAndReturnKey(values).longValue();
+			book.setId(id);
+		}
+		return book;
 	}
 
 	@Override
