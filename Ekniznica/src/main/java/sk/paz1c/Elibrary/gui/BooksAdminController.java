@@ -1,6 +1,5 @@
 package sk.paz1c.Elibrary.gui;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -22,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.paz1c.Elibrary.model.Book;
@@ -32,8 +30,9 @@ import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 import javafx.scene.input.MouseEvent;
 
+
 public class BooksAdminController {
-	
+	private ObservableList<Book> books = FXCollections.observableArrayList();
 
 	@FXML
 	private TableView<Book> booksTableView;
@@ -43,25 +42,7 @@ public class BooksAdminController {
 
 	@FXML
 	private Button addBookButton;
-	
-    @FXML
-    private TextField searchTextField;
 
-    @FXML
-    private Button searchButton;
-    
-    
-    private ObservableList<Book> books = FXCollections.observableArrayList();
-    
-    @FXML
-    void searchBook(ActionEvent event) {
-    	String searchedName = searchTextField.getText();
-		System.out.println(searchedName + " search name");
-		List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooksByName(searchedName);
-		books = FXCollections.observableArrayList(result);
-		booksTableView.setItems(books);
-		System.out.println(result);
-    }
 	@FXML
 	void onClickAddBookButton(ActionEvent event) {
 		openBookModal();
@@ -135,6 +116,7 @@ public class BooksAdminController {
 	}
 
 	private void openBookModal() {
+
 		AddBookController controller = new AddBookController(books);
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addBookView.fxml"));
@@ -151,6 +133,8 @@ public class BooksAdminController {
 	}
 
 	private void openCategoryModal() {
+		// pass readers list to constructor, when we create new user in
+		// CreateReaderController , table of readers will re-render
 		AddCategoryController controller = new AddCategoryController();
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("createCategoryView.fxml"));
