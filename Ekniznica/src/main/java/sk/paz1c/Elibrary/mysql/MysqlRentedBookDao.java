@@ -1,12 +1,15 @@
 package sk.paz1c.Elibrary.mysql;
 
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,9 +148,32 @@ public class MysqlRentedBookDao implements RentedBookDao {
 
 	@Override
 	public void addRentedBook(Long userId, Long bookId) {
-		Date date = java.sql.Date.valueOf(LocalDate.now());
-		Date returnDate = java.sql.Date.valueOf(LocalDate.now().plusMonths(2));
-		String sql = "INSERT INTO `elibrary`.`rented_book` (`id_reader`, `id_book`, `date_of_rent`, `deadline`) VALUES ('"+ userId + "', '"+bookId+"', "+ date + ", "+returnDate+");";
+
+//		
+//		Date returnDate = java.sql.Date.valueOf(LocalDate.now().plusMonths(2));
+//		
+//		System.out.println(date+" "+returnDate);
+//		
+//		String date = request.getParameter("date");
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // your template here
+//		
+//		java.util.Date dateStr = formatter.parse(sqlBirthday );
+//		
+//		java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
+		
+		//Date date = java.sql.Date.valueOf(LocalDate.now());
+//		java.util.Date date=new java.util.Date();
+//		
+//		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+		
+
+		
+		
+
+		//String sql = "INSERT INTO `elibrary`.`rented_book` (`id_reader`, `id_book`, `date_of_rent`, `deadline`) VALUES ('"+ userId + "', '"+bookId+"', "+ "TO_DATE("+sqlDate+")" + ", "+"TO_DATE("+sqlDate+")"+");";
+		String sql = "INSERT INTO `elibrary`.`rented_book` (`id_reader`, `id_book`, `date_of_rent`, `deadline`, is_returned) VALUES ('"+ userId + "', '"+bookId+"', "+ "NOW()" + ", "+"NOW() + INTERVAL 1 MONTH"+",0);";
+
 		jdbcTemplate.update(sql);
 	}
 
