@@ -43,6 +43,12 @@ public class BooksAdminController {
 
 	@FXML
 	private Button addBookButton;
+	
+	 @FXML
+	 private Button searchButton;
+
+	 @FXML
+	 private TextField searchTextField;
 
 	@FXML
 	void onClickAddBookButton(ActionEvent event) {
@@ -57,17 +63,13 @@ public class BooksAdminController {
 			booksTableView.setItems(books);
 			System.out.println(result);
 	 }
-	 @FXML
-	    private Button searchButton;
-
-	    @FXML
-	    private TextField searchTextField;
+	
 
 	@FXML
 	void onClickAddCategory(ActionEvent event) {
 		openCategoryModal();
 	}
-
+			//
 	@FXML
 	void rowClicked(MouseEvent event) {
 		if (event.getButton().equals(MouseButton.PRIMARY)) {

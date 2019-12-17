@@ -88,18 +88,6 @@ public class MysqlBookDao implements BookDao {
 
 
 	@Override
-	public Book getBookByYear(int year) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Book> getBooksByCategoryId(long categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Book addBook(Book book) {
 		if (book == null)
 			return null;
@@ -123,17 +111,11 @@ public class MysqlBookDao implements BookDao {
 		return book;
 	}
 
-	@Override
-	public void deleteBookById(long id) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public List<Book> getAllBooks() {
 		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.name as category"
-				+ " FROM Book " + 
-				"inner join Category " + 
+				+ " FROM Book " + "inner join Category " + 
 				"on Book.category_id = Category.id; ";
 //		ResultSetExtractor<Map<String, List<String>>>
 		

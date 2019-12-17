@@ -28,12 +28,6 @@ public class MysqlReaderDao implements ReaderDao {
 	}
 
 	@Override
-	public Reader getReaderById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Reader getReaderByUsernameAndPassword(String username, String password) {
 
 		String sql = "SELECT * FROM Reader where username = ? and password = ? ;";
@@ -64,11 +58,6 @@ public class MysqlReaderDao implements ReaderDao {
 
 	}
 
-	@Override
-	public Reader getReaderByUserName(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Reader saveReader(Reader reader) {
@@ -111,11 +100,6 @@ public class MysqlReaderDao implements ReaderDao {
 
 	}
 
-	@Override
-	public void deleteUserById(long id) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public List<Reader> getAllReaders() {

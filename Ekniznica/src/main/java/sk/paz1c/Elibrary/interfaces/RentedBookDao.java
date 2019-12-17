@@ -12,6 +12,6 @@ public interface RentedBookDao {
 	public List<RentedBook> getAlReturnedBooksForAdmin();
 	public RentedBook returnBook(RentedBook rentedBook);
 	public List<RentedBook> getNonReturnedRentedBookById(long id);
-	public void addRentedBook(int userId, int bookId);
+	public void addRentedBook(Long userId, Long bookId);
 	
 }

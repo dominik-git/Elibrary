@@ -9,13 +9,7 @@ public interface BookDao {
 
 	public Book getBookByName(String name);
 	
-	public Book getBookByYear(int year);
-	
-	public List<Book> getBooksByCategoryId(long categoryId);
-	
 	public Book addBook(Book book);
-	
-	public void deleteBookById(long id);
 	
 	public List<Book> getAllBooks();
 	
