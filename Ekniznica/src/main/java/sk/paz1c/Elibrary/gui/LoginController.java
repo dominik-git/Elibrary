@@ -49,6 +49,11 @@ public class LoginController {
 
 	@FXML
 	void initialize() {
+		//loginButton.getStyleClass().setAll("button"); 
+		//loginButton.getStyleClass().add("button success");
+		loginButton.getStyleClass().setAll("button","success"); 
+		
+
 		System.out.println("init");
 	}
 

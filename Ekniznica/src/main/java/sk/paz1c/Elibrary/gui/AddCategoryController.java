@@ -34,10 +34,10 @@ public class AddCategoryController {
 
 	@FXML
 	void onClickAddCategory(ActionEvent event) {
-		newCategory.setName(categoryNameTextField.getText());
-		Category category = DaoFactory.INSTANCE.getCategoryDao().addCategory(newCategory);
-		categories.add(category);
-		addCategoryButton.getScene().getWindow().hide();
+//		newCategory.setName(categoryNameTextField.getText());
+//		Category category = DaoFactory.INSTANCE.getCategoryDao().addCategory(newCategory);
+//		categories.add(category);
+//		addCategoryButton.getScene().getWindow().hide();
 
 	}
 

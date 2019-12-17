@@ -10,5 +10,7 @@ public interface CategoryDao {
 	public Category getCategoryByName(String name);
 
 	public List<Category> getAllCategories();
+	
+	public Category addCategory(Category category);
 
 }

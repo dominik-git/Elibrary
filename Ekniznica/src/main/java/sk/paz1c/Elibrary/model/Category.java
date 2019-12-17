@@ -1,7 +1,8 @@
 package sk.paz1c.Elibrary.model;
 
 public class Category {
-	private long id;
+	private Long id;
+
 	@Override
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + "]";
@@ -9,7 +10,7 @@ public class Category {
 
 	private String name;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
