@@ -58,7 +58,6 @@ public class MysqlReaderDao implements ReaderDao {
 
 	}
 
-
 	@Override
 	public Reader saveReader(Reader reader) {
 		// String sql ="INSERT INTO Reader (`name`, `surname`, `username`, `password`,
@@ -71,7 +70,8 @@ public class MysqlReaderDao implements ReaderDao {
 			// INSERT
 			SimpleJdbcInsert sjinsert = new SimpleJdbcInsert(jdbcTemplate);
 			sjinsert.withTableName("Reader");
-			sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender","email");
+			sjinsert.usingColumns("name", "surname", "username", "password", "isAdmin", "date_of_birth", "gender",
+					"email");
 			sjinsert.usingGeneratedKeyColumns("id");
 
 			Map<String, Object> values = new HashMap<String, Object>();
@@ -99,7 +99,6 @@ public class MysqlReaderDao implements ReaderDao {
 		return reader;
 
 	}
-
 
 	@Override
 	public List<Reader> getAllReaders() {
@@ -153,20 +152,20 @@ public class MysqlReaderDao implements ReaderDao {
 //		if (parts.length >= 2) {
 //			surname = parts[1];
 //		}
-		
+
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,");
 		builder.append(" Reader.username as username, Reader.password as password,");
-		builder.append(" Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender");
+		builder.append(
+				" Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender");
 		builder.append(" FROM Reader where isAdmin = 0 and CONCAT(name, ' ',surname) like ");
-		builder.append("\"%"+string+"%\"; ");
+		builder.append("\"%" + string + "%\"; ");
 		System.out.println(builder.toString());
-		
+
 //		String sql = "SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,"
 //				+ " Reader.username as username, Reader.password as password,"
 //				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender"
 //				+ " FROM Reader where isAdmin = 0 and (name like " + name +"%\" " + "or surname like "+ surname+"%\" )";
-
 
 		List<Reader> result = jdbcTemplate.query(builder.toString(), new ResultSetExtractor<List<Reader>>() {
 
@@ -199,5 +198,34 @@ public class MysqlReaderDao implements ReaderDao {
 		});
 
 		return result;
+	}
+
+	@Override
+	public Reader getReaderByName(String name) {
+		String sql = "SELECT * FROM Reader where name = ? ;";
+
+		try {
+			Reader reader = jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Reader>() {
+
+				public Reader mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+					Reader reader = new Reader();
+					reader.setName(rs.getString("name"));
+					reader.setId(rs.getLong("id"));
+					reader.setSurname(rs.getString("surname"));
+					reader.setUsername(rs.getString("username"));
+					reader.setAdmin(rs.getInt("isAdmin"));
+					reader.setBirthDate(rs.getDate("date_of_birth"));
+					reader.setGender(rs.getString("gender"));
+
+					return reader;
+				}
+			});
+			return reader;
+
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+
 	}
 }

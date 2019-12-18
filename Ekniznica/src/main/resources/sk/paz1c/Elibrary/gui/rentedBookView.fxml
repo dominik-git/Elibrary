@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="vypozickyPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="741.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="vypozickyPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="296.0" layoutY="22.0" text="Rented books">
+      <Label layoutX="296.0" layoutY="22.0" text="RENTED BOOKS">
          <font>
             <Font size="23.0" />
          </font></Label>
-      <TableView fx:id="rentedBookTableView" layoutY="102.0" onMouseClicked="#rowClicked" prefHeight="444.0" prefWidth="691.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TableView fx:id="rentedBookTableView" layoutX="7.0" layoutY="99.0" onMouseClicked="#rowClicked" prefHeight="440.0" prefWidth="737.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.0" />
       <Button fx:id="returnedButton" layoutX="635.0" layoutY="57.0" mnemonicParsing="false" onAction="#loadReturned" text="Returned" />
       <Button fx:id="rentedButton" layoutX="22.0" layoutY="57.0" mnemonicParsing="false" onAction="#loadRented" text="Rented" />
    </children>

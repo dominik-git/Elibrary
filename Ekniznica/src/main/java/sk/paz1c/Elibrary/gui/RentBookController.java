@@ -63,7 +63,5 @@ public class RentBookController {
     	//desctiptionTF.setLineWrap(true);
     	desctiptionTF.setWrapText(true);
     	
-
-    	
     }
 }

@@ -28,11 +28,11 @@ public class LoginController {
 	void login(ActionEvent event) {
 		String username = usernameTextField.getText();
 		String password = passwordTextField.getText();
-		
+
 		Reader reader = DaoFactory.INSTANCE.getReaderDao().getReaderByUsernameAndPassword(username, password);
-		
-		System.out.println(reader.toString()+" "+reader.getBirthDate());
-		
+
+		System.out.println(reader.toString() + " " + reader.getBirthDate());
+
 		if (reader == null) {
 			System.out.println("not found");
 		} else {
@@ -40,7 +40,8 @@ public class LoginController {
 			if (reader.getAdmin() == true) {
 				loadAdminView();
 			} else {
-				loadNoAdminView();
+				loadNoAdminView(reader.getName());
+				
 			}
 
 		}
@@ -49,16 +50,15 @@ public class LoginController {
 
 	@FXML
 	void initialize() {
-		//loginButton.getStyleClass().setAll("button"); 
-		//loginButton.getStyleClass().add("button success");
-		loginButton.getStyleClass().setAll("button","success"); 
-		
+		// loginButton.getStyleClass().setAll("button");
+		// loginButton.getStyleClass().add("button success");
+		loginButton.getStyleClass().setAll("button", "success");
 
 		System.out.println("init");
 	}
 
-	private void loadNoAdminView() {
-		NoAdminViewController controller = new NoAdminViewController();
+	private void loadNoAdminView(String name) {
+		NoAdminViewController controller = new NoAdminViewController(name);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("noAdminView.fxml"));
 		fxmlLoader.setController(controller);
 		showScene(fxmlLoader);

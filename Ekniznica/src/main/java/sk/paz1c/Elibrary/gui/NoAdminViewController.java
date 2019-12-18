@@ -14,21 +14,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.Reader;
 import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.modelFx.BookFxModel;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 public class NoAdminViewController {
 
+	public NoAdminViewController(String name) {
+		readerName = name;
+	}
+
 	@FXML
 	private TableView<RentedBook> rentedBookTable;
-
+    private String readerName;
 	@FXML
 	void initialize() {
 		List<RentedBook> result = new ArrayList<RentedBook>();
-
-		result = DaoFactory.INSTANCE.getRentedBookDao().getRentedBookById(1);
-
+        Reader reader = DaoFactory.INSTANCE.getReaderDao().getReaderByName(readerName);
+		result = DaoFactory.INSTANCE.getRentedBookDao().getRentedBookById(reader.getId());
+        
 		
 		rentedBookTable.setItems(FXCollections.observableArrayList(result));
 

@@ -5,14 +5,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="726.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="addCategoryButton" layoutX="496.0" layoutY="86.0" mnemonicParsing="false" onAction="#onClickAddCategory" text="Add category" />
-      <Button fx:id="addBookButton" layoutX="626.0" layoutY="86.0" mnemonicParsing="false" onAction="#onClickAddBookButton" text="Add book" />
-      <Label layoutX="347.0" layoutY="24.0" text="Books" />
-      <TableView fx:id="booksTableView" layoutX="5.0" layoutY="137.0" onMouseClicked="#rowClicked" prefHeight="371.0" prefWidth="716.0" AnchorPane.bottomAnchor="6.800000000000011" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-      <Button fx:id="searchButton" layoutX="182.0" layoutY="86.0" mnemonicParsing="false" onAction="#searchBook" text="Search" />
-      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="87.0" />
+      <Button fx:id="addCategoryButton" layoutX="536.0" layoutY="45.0" mnemonicParsing="false" onAction="#onClickAddCategory" text="Add category" />
+      <Button fx:id="addBookButton" layoutX="652.0" layoutY="45.0" mnemonicParsing="false" onAction="#onClickAddBookButton" text="Add book" />
+      <Label layoutX="338.0" layoutY="14.0" prefHeight="32.0" prefWidth="75.0" text="BOOKS">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <TableView fx:id="booksTableView" layoutX="6.0" layoutY="137.0" onMouseClicked="#rowClicked" prefHeight="440.0" prefWidth="650.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="searchButton" layoutX="177.0" layoutY="45.0" mnemonicParsing="false" onAction="#searchBook" text="Search" />
+      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="46.0" />
    </children>
 </AnchorPane>
