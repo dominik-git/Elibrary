@@ -130,11 +130,12 @@ public class BooksAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("hello");
 	}
 
 	private void openBookModal() {
 
-		AddBookController controller = new AddBookController(books);
+		AddBookController controller = new AddBookController();
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addBookView.fxml"));
 			fxmlLoader.setController(controller);
@@ -147,6 +148,9 @@ public class BooksAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooks();
+		books = FXCollections.observableArrayList(result);
+		booksTableView.setItems(books);
 	}
 
 	private void openCategoryModal() {
