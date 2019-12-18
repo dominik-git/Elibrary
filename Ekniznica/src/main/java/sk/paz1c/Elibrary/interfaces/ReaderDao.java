@@ -8,6 +8,8 @@ public interface ReaderDao {
 
 	public Reader getReaderByUsernameAndPassword(String username, String password);
 	
+	public Reader getReaderByName(String name);
+	
 	public Reader saveReader(Reader reader);
 	
 	public List<Reader> getAllReaders();
