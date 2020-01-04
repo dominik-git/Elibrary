@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.paz1c.Elibrary.interfaces.BookDao;
 import sk.paz1c.Elibrary.model.Book;
+import sk.paz1c.Elibrary.model.Category;
 
 public class MysqlBookDao implements BookDao {
 
@@ -28,22 +29,21 @@ public class MysqlBookDao implements BookDao {
 
 	@Override
 	public Book getBookById(long id) {
-		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.name as category"
-				+ " FROM Book " + 
-				"inner join Category " + 
-				"on Book.category_id = Category.id " 
-				+ "where Book.id = " + id + ";";
+		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.id categoryId"
+				+ " FROM Book " + "inner join Category " + "on Book.category_id = Category.id " + "where Book.id = "
+				+ id + ";";
 		try {
 			Book book = jdbcTemplate.queryForObject(sql, new RowMapper<Book>() {
 
 				@Override
 				public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Book book = new Book();
-			    	book.setId(rs.getLong("id"));
+					Category category = DaoFactory.INSTANCE.getCategoryDao().getCategoryById(rs.getLong("categoryId"));
+					book.setCategory(category);
+					book.setId(rs.getLong("id"));
 					book.setName(rs.getString("name"));
 					book.setAuthor(rs.getString("author"));
 					book.setDescription(rs.getString("description"));
-					book.setCategory(rs.getString("category"));
 					book.setYearOfPublication(rs.getDate("year_of_publication"));
 					return book;
 				}
@@ -58,22 +58,21 @@ public class MysqlBookDao implements BookDao {
 
 	@Override
 	public Book getBookByName(String name) {
-		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.name as category"
-				+ " FROM Book " + 
-				"inner join Category " + 
-				"on Book.category_id = Category.id " 
-				+ "where Book.name = '" + name + "';";
+		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication,Category.id categoryId"
+				+ " FROM Book " + "inner join Category " + "on Book.category_id = Category.id " + "where Book.name = '"
+				+ name + "';";
 		try {
 			Book book = jdbcTemplate.queryForObject(sql, new RowMapper<Book>() {
 
 				@Override
 				public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Book book = new Book();
-			    	book.setId(rs.getLong("id"));
+					Category category = DaoFactory.INSTANCE.getCategoryDao().getCategoryById(rs.getLong("categoryId"));
+					book.setCategory(category);
+					book.setId(rs.getLong("id"));
 					book.setName(rs.getString("name"));
 					book.setAuthor(rs.getString("author"));
 					book.setDescription(rs.getString("description"));
-					book.setCategory(rs.getString("category"));
 					book.setYearOfPublication(rs.getDate("year_of_publication"));
 					return book;
 				}
@@ -85,7 +84,6 @@ public class MysqlBookDao implements BookDao {
 			return null;
 		}
 	}
-
 
 	@Override
 	public Book addBook(Book book) {
@@ -103,87 +101,99 @@ public class MysqlBookDao implements BookDao {
 			values.put("author", book.getAuthor());
 			values.put("description", book.getDescription());
 			values.put("year_of_publication", book.getYearOfPublication());
-			int categoryId = Integer.parseInt(book.getCategory());
-			values.put("category_id", categoryId);
+			values.put("category_id", book.getCategory().getId());
 			long id = sjinsert.executeAndReturnKey(values).longValue();
 			book.setId(id);
 		}
 		return book;
 	}
 
-
 	@Override
 	public List<Book> getAllBooks() {
-		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.name as category"
-				+ " FROM Book " + "inner join Category " + 
-				"on Book.category_id = Category.id; ";
+		String sql = "SELECT Book.id as id, Book.name as name, Book.author as author, Book.description as description, Book.year_of_publication as year_of_publication, Category.id categoryId"
+				+ " FROM Book " + "inner join Category " + "on Book.category_id = Category.id; ";
 //		ResultSetExtractor<Map<String, List<String>>>
-		
+
 		List<Book> result = jdbcTemplate.query(sql, new ResultSetExtractor<List<Book>>() {
 
 			@SuppressWarnings("null")
 			@Override
 			public List<Book> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<Book> result = new ArrayList<Book>();
-			
+
 				Book book = null;
-				while(rs.next()) {
+				while (rs.next()) {
 					book = new Book();
+					Category category = DaoFactory.INSTANCE.getCategoryDao().getCategoryById(rs.getLong("categoryId"));
+					book.setCategory(category);
 					book.setId(rs.getLong("id"));
 					book.setName(rs.getString("name"));
 					book.setAuthor(rs.getString("author"));
 					book.setDescription(rs.getString("description"));
-					book.setCategory(rs.getString("category"));
-					book.setYearOfPublication(rs.getDate("year_of_publication"));	
+					book.setYearOfPublication(rs.getDate("year_of_publication"));
 					result.add(book);
-			}
+				}
 				return result;
 			}
-			
+
 		});
-		
+
 		return result;
 	}
 
-		@Override
-		public List<Book> getAllBooksByName(String name) {
-			StringBuilder builder = new StringBuilder();
-			builder.append("SELECT Book.id as id, Book.name as name, Book.author as author,");
-			builder.append(" Book.description as description, Book.year_of_publication as year_of_publication, Category.name as category");
-			builder.append(" FROM Book inner join Category " + "on Book.category_id = Category.id ");
-			builder.append(" where Book.name like ");
-			builder.append("\"%"+name+"%\"; ");
-			System.out.println(builder.toString());
-			
-//			String sql = "SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,"
-//					+ " Reader.username as username, Reader.password as password,"
-//					+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender"
-//					+ " FROM Reader where isAdmin = 0 and (name like " + name +"%\" " + "or surname like "+ surname+"%\" )";
+	@Override
+	public List<Book> getAllBooksByName(String name) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SELECT Book.id as id, Book.name as name, Book.author as author,");
+		builder.append(
+				" Book.description as description, Book.year_of_publication as year_of_publication, Category.id categoryId Category.name as catName");
+		builder.append(" FROM Book inner join Category " + "on Book.category_id = Category.id ");
+		builder.append(" where Book.name like ");
+		builder.append("\"%" + name + "%\"; ");
+		System.out.println(builder.toString());
 
+		List<Book> result = jdbcTemplate.query(builder.toString(), new ResultSetExtractor<List<Book>>() {
 
-			List<Book> result = jdbcTemplate.query(builder.toString(), new ResultSetExtractor<List<Book>>() {
+			@SuppressWarnings("null")
+			@Override
+			public List<Book> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<Book> result = new ArrayList<Book>();
 
-				@SuppressWarnings("null")
-				@Override
-				public List<Book> extractData(ResultSet rs) throws SQLException, DataAccessException {
-					List<Book> result = new ArrayList<Book>();
-
-					Book book = null;
-					while (rs.next()) {
-						book = new Book();
-						book.setId(rs.getLong("id"));
-						book.setName(rs.getString("name"));
-						book.setAuthor(rs.getString("author"));
-						book.setDescription(rs.getString("description"));
-						book.setCategory(rs.getString("category"));
-						book.setYearOfPublication(rs.getDate("year_of_publication"));
-						result.add(book);
-					}
-					return result;
+				Book book = null;
+				while (rs.next()) {
+					book = new Book();
+					Category category = DaoFactory.INSTANCE.getCategoryDao().getCategoryById(rs.getLong("categoryId"));
+					book.setCategory(category);
+					book.setId(rs.getLong("id"));
+					book.setName(rs.getString("name"));
+					book.setAuthor(rs.getString("author"));
+					book.setDescription(rs.getString("description"));
+					book.setYearOfPublication(rs.getDate("year_of_publication"));
+					result.add(book);
 				}
+				return result;
+			}
 
-			});
+		});
 
-			return result;
-		}
+		return result;
 	}
+
+	@Override
+	public Long deleteBookById(long id) {
+		String sql = "DELETE FROM Book WHERE Book.id = " + id + ";";
+
+		jdbcTemplate.update(sql);
+
+		return id;
+	}
+
+	@Override
+	public Book updateBook(Book book) {
+		jdbcTemplate.update(
+				"UPDATE Book SET  name = ?  ,author = ? ,description = ? ,category_id= ? ,year_of_publication = ? WHERE id  = ?",
+				book.getName(), book.getAuthor(), book.getDescription(), book.getCategory().getId(),
+				book.getYearOfPublication(), book.getId());
+		return book;
+	}
+}

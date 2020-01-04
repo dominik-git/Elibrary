@@ -26,14 +26,10 @@ import javafx.beans.value.ObservableValue;
 
 public class AddBookController {
 	public AddBookController() {
-	
-	}
-	private ObservableList<Category> categories = FXCollections.observableArrayList();
-	@FXML
-	private ResourceBundle resources;
 
-	@FXML
-	private URL location;
+	}
+
+	private ObservableList<Category> categories = FXCollections.observableArrayList();
 
 	@FXML
 	private TextField nameTextField;
@@ -55,16 +51,17 @@ public class AddBookController {
 	private Book newBook = new Book();
 
 	@FXML
-	void onClickAddBook(ActionEvent event) {	
-		if(nameTextField.getText().isEmpty()|| autorTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()|| newBook.getCategory() == null	) {
-			
+	void onClickAddBook(ActionEvent event) {
+		if (nameTextField.getText().isEmpty() || autorTextField.getText().isEmpty()
+				|| descriptionTextArea.getText().isEmpty() || newBook.getCategory() == null) {
+
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("You have to fill all inputs!");
 			alert.showAndWait();
-    		
-		}else {
+
+		} else {
 			newBook.setName(nameTextField.getText());
 			newBook.setAuthor(autorTextField.getText());
 			newBook.setDescription(descriptionTextArea.getText());
@@ -74,7 +71,6 @@ public class AddBookController {
 			addBookButton.getScene().getWindow().hide();
 		}
 
-		
 	}
 
 	@FXML
@@ -86,8 +82,8 @@ public class AddBookController {
 		categoryChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
 			@Override
 			public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue) {
-				String id = String.valueOf(newValue.getId());
-				newBook.setCategory(id);
+				System.out.println(newValue.getId());
+				newBook.setCategory(newValue);
 			}
 
 		});

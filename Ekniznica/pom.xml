@@ -32,8 +32,9 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>5.2.0.RELEASE</version>
+			<version>5.2.2.RELEASE</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.kordamp.bootstrapfx</groupId>
 			<artifactId>bootstrapfx-core</artifactId>
@@ -44,10 +45,10 @@
 
 	</dependencies>
 	<repositories>
-    <repository>
-        <id>central</id>
-        <name>jcenter</name>
-        <url>http://jcenter.bintray.com</url>
-    </repository>
-</repositories>
+		<repository>
+			<id>central</id>
+			<name>jcenter</name>
+			<url>http://jcenter.bintray.com</url>
+		</repository>
+	</repositories>
 </project>

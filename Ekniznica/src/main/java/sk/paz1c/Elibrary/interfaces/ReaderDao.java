@@ -10,10 +10,18 @@ public interface ReaderDao {
 	
 	public Reader getReaderByName(String name);
 	
+	public Reader getReaderById(Long id);
+	
 	public Reader saveReader(Reader reader);
 	
 	public List<Reader> getAllReaders();
 	
 	public List<Reader> getAllReadersByFullName(String name);
+	
+	public Long deleteReaderById(long id);
+	
+	public Reader updateReader(Reader reader);
+	
+	public void changePasswordById(long id, String password);
 
 }

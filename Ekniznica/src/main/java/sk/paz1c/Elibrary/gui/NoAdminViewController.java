@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,17 +35,18 @@ public class NoAdminViewController {
         Reader reader = DaoFactory.INSTANCE.getReaderDao().getReaderByName(readerName);
 		result = DaoFactory.INSTANCE.getRentedBookDao().getRentedBookById(reader.getId());
         
-		
+		System.out.println(result);
 		rentedBookTable.setItems(FXCollections.observableArrayList(result));
 
 		TableColumn<RentedBook, String> nameCol = new TableColumn<>("Name");
-		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBook().getName()));
 		rentedBookTable.getColumns().add(nameCol);
 
 
-		TableColumn<RentedBook, String> percentageCol = new TableColumn<>("Category");
-		percentageCol.setCellValueFactory(new PropertyValueFactory<>("category"));
-		rentedBookTable.getColumns().add(percentageCol);
+		TableColumn<RentedBook, String> catCol = new TableColumn<>("Category");
+		catCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBook().getCategory().getName()));
+
+		rentedBookTable.getColumns().add(catCol);
 		
 		TableColumn<RentedBook, Date> dateOfRentCol = new TableColumn<>("Date Of Rent");
 		dateOfRentCol.setCellValueFactory(new PropertyValueFactory<>("dateOfRent"));

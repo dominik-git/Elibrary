@@ -25,10 +25,11 @@ public class MysqlCategoryDao implements CategoryDao {
 		this.jdbcTemplate = jdbcTemplate;
 
 	}
-private void sysout() {
-	// TODO Auto-generated method stub
 
-}
+	private void sysout() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public List<Category> getAllCategories() {
@@ -75,5 +76,44 @@ private void sysout() {
 		}
 		return null;
 
+	}
+
+	@Override
+	public Category getCategoryById(Long id) {
+		String sql = "select * from category where id="+id+";";
+
+		try {
+			Category category = jdbcTemplate.queryForObject(sql, new RowMapper<Category>() {
+
+				@Override
+				public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Category category = new Category();
+					category.setId(rs.getLong("id"));
+					category.setName(rs.getString("name"));
+
+					return category;
+				}
+
+			});
+			return category;
+
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Long deleteCategoryById(long id) {
+		String sql = "DELETE FROM Category WHERE category.id = "+id+";"; 
+		jdbcTemplate.update(sql);
+		return id;
+	}
+
+	@Override
+	public Category updateCategory(Category category) {
+		jdbcTemplate.update(
+				"UPDATE Category SET  name =? WHERE Category.id  = ? ",
+				category.getName(),category.getId());
+		return category;
 	}
 }

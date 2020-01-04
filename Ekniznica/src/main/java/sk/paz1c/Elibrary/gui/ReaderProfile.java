@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +69,7 @@ public class ReaderProfile {
 		dateOfBirthLabel.setText(reader.getBirthDate().toString());
 		userNameLabel.setText(reader.getUsername());
 		
-		List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookById(reader.getId());
+		List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookByReaderId(reader.getId());
 		rentedBooks = FXCollections.observableArrayList(result);
 		rentedBookTable.setItems(rentedBooks);
 
@@ -77,11 +78,13 @@ public class ReaderProfile {
 		rentedBookTable.getColumns().add(nameBookCol);
 
 		TableColumn<RentedBook, String> catCol = new TableColumn<>("Category");
-		catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+		catCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBook().getCategory().getName()));
 		rentedBookTable.getColumns().add(catCol);
 
 		TableColumn<RentedBook, String> nameReadCol = new TableColumn<>("Name");
 		nameReadCol.setCellValueFactory(new PropertyValueFactory<>("readerFullName"));
+		nameReadCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getReader().getFullName()));
+
 		rentedBookTable.getColumns().add(nameReadCol);
 
 		TableColumn<RentedBook, Boolean> isReturnedCol = new TableColumn<>("Returned");

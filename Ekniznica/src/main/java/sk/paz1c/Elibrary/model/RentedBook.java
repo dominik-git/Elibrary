@@ -4,44 +4,20 @@ import java.sql.Date;
 
 public class RentedBook {
 
-	private String name;
-	private String category;
-	private String readerFullName;
-	private long id;
-	private boolean isReturned;
+	private Long id;
+	private Boolean isReturned;
 	private Date dateOfRent;
 	private Date deadline;
 	private Date dateOfReturn;
+
+	private Book book;
+	private Reader reader;
 
 	public RentedBook() {
 
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getReaderFullName() {
-		return readerFullName;
-	}
-
-	public void setReaderFullName(String readerFullName) {
-		this.readerFullName = readerFullName;
-	}
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -49,13 +25,14 @@ public class RentedBook {
 		this.id = id;
 	}
 
-	public boolean getIsReturned() {
+	public Boolean getIsReturned() {
 		return isReturned;
 	}
 
-	public void setReturned(long l) {
-		
-		this.isReturned = (l == 1 )? true :false;
+	public void setIsReturned(int value) {
+
+		isReturned = (value == 1) ? true : false;
+		this.isReturned = isReturned;
 	}
 
 	public Date getDateOfRent() {
@@ -82,68 +59,26 @@ public class RentedBook {
 		this.dateOfReturn = dateOfReturn;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((dateOfRent == null) ? 0 : dateOfRent.hashCode());
-		result = prime * result + ((dateOfReturn == null) ? 0 : dateOfReturn.hashCode());
-		result = prime * result + ((deadline == null) ? 0 : deadline.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (isReturned ? 1231 : 1237);
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((readerFullName == null) ? 0 : readerFullName.hashCode());
-		return result;
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public Reader getReader() {
+		return reader;
+	}
+
+	public void setReader(Reader reader) {
+		this.reader = reader;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RentedBook other = (RentedBook) obj;
-		if (category == null) {
-			if (other.category != null)
-				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (dateOfRent == null) {
-			if (other.dateOfRent != null)
-				return false;
-		} else if (!dateOfRent.equals(other.dateOfRent))
-			return false;
-		if (dateOfReturn == null) {
-			if (other.dateOfReturn != null)
-				return false;
-		} else if (!dateOfReturn.equals(other.dateOfReturn))
-			return false;
-		if (deadline == null) {
-			if (other.deadline != null)
-				return false;
-		} else if (!deadline.equals(other.deadline))
-			return false;
-		if (id != other.id)
-			return false;
-		if (isReturned != other.isReturned)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (readerFullName == null) {
-			if (other.readerFullName != null)
-				return false;
-		} else if (!readerFullName.equals(other.readerFullName))
-			return false;
-		return true;
+	public String toString() {
+		return "RentedBook [id=" + id + ", isReturned=" + isReturned + ", dateOfRent=" + dateOfRent + ", deadline="
+				+ deadline + ", dateOfReturn=" + dateOfReturn + ", book=" + book + ", reader=" + reader + "]";
 	}
-	
-
-
 
 }

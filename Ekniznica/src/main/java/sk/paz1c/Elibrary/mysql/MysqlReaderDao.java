@@ -46,7 +46,9 @@ public class MysqlReaderDao implements ReaderDao {
 							reader.setAdmin(rs.getInt("isAdmin"));
 							reader.setBirthDate(rs.getDate("date_of_birth"));
 							reader.setGender(rs.getString("gender"));
-
+							reader.setEmail(rs.getString("email"));
+							reader.setGender(rs.getString("gender"));
+							reader.setAdmin(rs.getInt("isAdmin"));
 							return reader;
 						}
 					});
@@ -87,15 +89,6 @@ public class MysqlReaderDao implements ReaderDao {
 			long id = sjinsert.executeAndReturnKey(values).longValue();
 			reader.setId(id);
 		}
-//		} else {
-//			//UPDATE
-//			String sql = "UPDATE subject SET name = ? WHERE id = " + subject.getId();
-//			jdbcTemplate.update(sql, subject.getName());
-//			String deleteSql = "DELETE FROM student_at_subject WHERE subject_id = "
-//								+ subject.getId();
-//			jdbcTemplate.update(deleteSql);
-//			insertStudents(subject);
-//		}
 		return reader;
 
 	}
@@ -106,8 +99,7 @@ public class MysqlReaderDao implements ReaderDao {
 				+ " Reader.username as username, Reader.password as password,"
 				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender"
 				+ " FROM Reader where isAdmin=0;";
-//		ResultSetExtractor<Map<String, List<String>>>
-
+		
 		List<Reader> result = jdbcTemplate.query(sql, new ResultSetExtractor<List<Reader>>() {
 
 			@SuppressWarnings("null")
@@ -143,15 +135,6 @@ public class MysqlReaderDao implements ReaderDao {
 
 	@Override
 	public List<Reader> getAllReadersByFullName(String string) {
-//		String[] parts = string.split(" ");
-//		String name = "";
-//		String surname = "";
-//		if (parts.length >= 1) {
-//			name = parts[0];
-//		}
-//		if (parts.length >= 2) {
-//			surname = parts[1];
-//		}
 
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,");
@@ -161,11 +144,6 @@ public class MysqlReaderDao implements ReaderDao {
 		builder.append(" FROM Reader where isAdmin = 0 and CONCAT(name, ' ',surname) like ");
 		builder.append("\"%" + string + "%\"; ");
 		System.out.println(builder.toString());
-
-//		String sql = "SELECT Reader.id as id, Reader.name as name, Reader.surname as surname,"
-//				+ " Reader.username as username, Reader.password as password,"
-//				+ " Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender"
-//				+ " FROM Reader where isAdmin = 0 and (name like " + name +"%\" " + "or surname like "+ surname+"%\" )";
 
 		List<Reader> result = jdbcTemplate.query(builder.toString(), new ResultSetExtractor<List<Reader>>() {
 
@@ -226,6 +204,60 @@ public class MysqlReaderDao implements ReaderDao {
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
+
+	}
+
+	@Override
+	public Reader getReaderById(Long id) {
+		System.out.println("reader id" + id);
+		String sql = "SELECT * FROM eLibrary.Reader where id = ? ;";
+
+		try {
+			Reader reader = jdbcTemplate.queryForObject(sql, new Object[] { id }, new RowMapper<Reader>() {
+
+				public Reader mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Reader reader = new Reader();
+					reader.setName(rs.getString("name"));
+					reader.setId(rs.getLong("id"));
+					reader.setSurname(rs.getString("surname"));
+					reader.setUsername(rs.getString("username"));
+					reader.setAdmin(rs.getInt("isAdmin"));
+					reader.setBirthDate(rs.getDate("date_of_birth"));
+					reader.setGender(rs.getString("gender"));
+					reader.setEmail(rs.getString("email"));
+					reader.setGender(rs.getString("gender"));
+
+					return reader;
+				}
+			});
+			return reader;
+
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Long deleteReaderById(long id) {
+		String sql = "DELETE FROM Reader WHERE reader.id = " + id + ";";
+		jdbcTemplate.update(sql);
+
+		return id;
+	}
+
+	@Override
+	public Reader updateReader(Reader reader) {
+
+		jdbcTemplate.update(
+				"UPDATE Reader SET  password = ? ,name = ? ,surname= ? ,username = ? ,date_of_birth = ? ,gender = ? ,email = ? , WHERE Reader.id  = ? ",
+				reader.getPassword(), reader.getName(), reader.getSurname(), reader.getUsername(),
+				reader.getBirthDate(), reader.getGender(), reader.getEmail(), reader.getId());
+		return reader;
+	}
+
+	@Override
+	public void changePasswordById(long id, String password) {
+		jdbcTemplate.update("UPDATE Reader SET  password = ?  WHERE Reader.id  = ?", password, id);
 
 	}
 }

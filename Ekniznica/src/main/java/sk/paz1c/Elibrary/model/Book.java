@@ -9,9 +9,15 @@ public class Book {
 	private String name;
 	private String author;
 	private String description;
-	private String category;
+	private Category category;
 	private Date yearOfPublication;
-	
+		
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -36,12 +42,7 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
+
 	public Date getYearOfPublication() {
 		return yearOfPublication;
 	}

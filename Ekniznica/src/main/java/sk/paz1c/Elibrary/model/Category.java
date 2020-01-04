@@ -2,12 +2,6 @@ package sk.paz1c.Elibrary.model;
 
 public class Category {
 	private Long id;
-
-	@Override
-	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
-	}
-
 	private String name;
 
 	public Long getId() {
@@ -24,5 +18,10 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + "]";
 	}
 }

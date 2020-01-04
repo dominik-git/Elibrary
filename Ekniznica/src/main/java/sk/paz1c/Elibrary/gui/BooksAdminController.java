@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,7 +31,6 @@ import sk.paz1c.Elibrary.model.RentedBook;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 import javafx.scene.input.MouseEvent;
 
-
 public class BooksAdminController {
 	private ObservableList<Book> books = FXCollections.observableArrayList();
 
@@ -43,33 +42,33 @@ public class BooksAdminController {
 
 	@FXML
 	private Button addBookButton;
-	
-	 @FXML
-	 private Button searchButton;
 
-	 @FXML
-	 private TextField searchTextField;
+	@FXML
+	private Button searchButton;
+
+	@FXML
+	private TextField searchTextField;
 
 	@FXML
 	void onClickAddBookButton(ActionEvent event) {
 		openBookModal();
 	}
-	 @FXML
-	 void searchBook(ActionEvent event) {
-		 String searchedName = searchTextField.getText();
-			System.out.println(searchedName + " search name");
-			List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooksByName(searchedName);
-			books = FXCollections.observableArrayList(result);
-			booksTableView.setItems(books);
-			System.out.println(result);
-	 }
-	
+
+	@FXML
+	void searchBook(ActionEvent event) {
+		String searchedName = searchTextField.getText();
+		System.out.println(searchedName + " search name");
+		List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooksByName(searchedName);
+		books = FXCollections.observableArrayList(result);
+		booksTableView.setItems(books);
+	}
 
 	@FXML
 	void onClickAddCategory(ActionEvent event) {
 		openCategoryModal();
 	}
-			//
+
+	//
 	@FXML
 	void rowClicked(MouseEvent event) {
 		if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -85,7 +84,6 @@ public class BooksAdminController {
 				if (book == null) {
 					return;
 				}
-				System.out.println("asasda" + book.toString());
 				openRentBookModal(book);
 			}
 
@@ -102,7 +100,7 @@ public class BooksAdminController {
 		booksTableView.getColumns().add(nameBookCol);
 
 		TableColumn<Book, String> catCol = new TableColumn<>("Category");
-		catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+		catCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategory().getName()));
 		booksTableView.getColumns().add(catCol);
 
 		TableColumn<Book, String> nameReadCol = new TableColumn<>("Author");
@@ -127,10 +125,13 @@ public class BooksAdminController {
 			modalStage.setScene(scene);
 			modalStage.initModality(Modality.APPLICATION_MODAL);
 			modalStage.showAndWait();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("hello");
+		List<Book> result = DaoFactory.INSTANCE.getBookDao().getAllBooks();
+		books = FXCollections.observableArrayList(result);
+		booksTableView.setItems(books);
 	}
 
 	private void openBookModal() {

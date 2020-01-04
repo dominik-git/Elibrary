@@ -50,7 +50,7 @@ public class ReturnBookModalController {
 			List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getAllRentedBooksForAdmin();
 			rentedBooks = FXCollections.observableArrayList(result);
 		} else {
-			List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookById(rentedBook.getId());
+			List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookByReaderId(rentedBook.getId());
 			rentedBooks = FXCollections.observableArrayList(result);
 		}
 		
@@ -60,7 +60,7 @@ public class ReturnBookModalController {
 	@FXML
 	void initialize() {
 
-		nameOfBookLabel.setText(rentedBook.getName());
+		nameOfBookLabel.setText(rentedBook.getBook().getName());
 		
 	}
 

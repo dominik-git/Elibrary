@@ -90,6 +90,10 @@ public class Reader {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getFullName() {
+		return this.name+" "+this.surname;
+	}
 
 	// put values from Readerfx model to reader
 	public void mapFxReaderToReader(ReaderFx readerFxModel) {
