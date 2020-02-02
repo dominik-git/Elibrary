@@ -26,11 +26,6 @@ public class MysqlCategoryDao implements CategoryDao {
 
 	}
 
-	private void sysout() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public List<Category> getAllCategories() {
 		String sql = "select * from category;";

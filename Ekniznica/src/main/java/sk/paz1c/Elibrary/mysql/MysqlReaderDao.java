@@ -43,6 +43,7 @@ public class MysqlReaderDao implements ReaderDao {
 							reader.setId(rs.getLong("id"));
 							reader.setSurname(rs.getString("surname"));
 							reader.setUsername(rs.getString("username"));
+							reader.setPassword(rs.getString("password"));
 							reader.setAdmin(rs.getInt("isAdmin"));
 							reader.setBirthDate(rs.getDate("date_of_birth"));
 							reader.setGender(rs.getString("gender"));
@@ -62,11 +63,7 @@ public class MysqlReaderDao implements ReaderDao {
 
 	@Override
 	public Reader saveReader(Reader reader) {
-		// String sql ="INSERT INTO Reader (`name`, `surname`, `username`, `password`,
-		// `isAdmin`, `date_of_birth`, `gender`, `email`) VALUES (?, ?, ?, ?, ?, ?,
-		// '?',?');";
-
-		if (reader == null)
+		if (reader == null || reader.getName() == null || reader.getSurname() == null || reader.getUsername() == null || reader.getBirthDate() == null || reader.getGender() == null)
 			return null;
 		if (reader.getId() == null) {
 			// INSERT
@@ -89,6 +86,7 @@ public class MysqlReaderDao implements ReaderDao {
 			long id = sjinsert.executeAndReturnKey(values).longValue();
 			reader.setId(id);
 		}
+		
 		return reader;
 
 	}
@@ -143,7 +141,6 @@ public class MysqlReaderDao implements ReaderDao {
 				" Reader.isAdmin as isAdmin, Reader.date_of_birth as date_of_birth, " + "Reader.gender as gender");
 		builder.append(" FROM Reader where isAdmin = 0 and CONCAT(name, ' ',surname) like ");
 		builder.append("\"%" + string + "%\"; ");
-		System.out.println(builder.toString());
 
 		List<Reader> result = jdbcTemplate.query(builder.toString(), new ResultSetExtractor<List<Reader>>() {
 
@@ -192,6 +189,7 @@ public class MysqlReaderDao implements ReaderDao {
 					reader.setId(rs.getLong("id"));
 					reader.setSurname(rs.getString("surname"));
 					reader.setUsername(rs.getString("username"));
+					reader.setPassword(rs.getString("password"));
 					reader.setAdmin(rs.getInt("isAdmin"));
 					reader.setBirthDate(rs.getDate("date_of_birth"));
 					reader.setGender(rs.getString("gender"));
@@ -209,7 +207,6 @@ public class MysqlReaderDao implements ReaderDao {
 
 	@Override
 	public Reader getReaderById(Long id) {
-		System.out.println("reader id" + id);
 		String sql = "SELECT * FROM eLibrary.Reader where id = ? ;";
 
 		try {
@@ -221,6 +218,7 @@ public class MysqlReaderDao implements ReaderDao {
 					reader.setId(rs.getLong("id"));
 					reader.setSurname(rs.getString("surname"));
 					reader.setUsername(rs.getString("username"));
+					reader.setPassword(rs.getString("password"));
 					reader.setAdmin(rs.getInt("isAdmin"));
 					reader.setBirthDate(rs.getDate("date_of_birth"));
 					reader.setGender(rs.getString("gender"));
@@ -249,7 +247,7 @@ public class MysqlReaderDao implements ReaderDao {
 	public Reader updateReader(Reader reader) {
 
 		jdbcTemplate.update(
-				"UPDATE Reader SET  password = ? ,name = ? ,surname= ? ,username = ? ,date_of_birth = ? ,gender = ? ,email = ? , WHERE Reader.id  = ? ",
+				"UPDATE Reader SET  password = ? ,name = ? ,surname= ? ,username = ? ,date_of_birth = ? ,gender = ? ,email = ? WHERE Reader.id  = ? ; ",
 				reader.getPassword(), reader.getName(), reader.getSurname(), reader.getUsername(),
 				reader.getBirthDate(), reader.getGender(), reader.getEmail(), reader.getId());
 		return reader;
@@ -257,7 +255,9 @@ public class MysqlReaderDao implements ReaderDao {
 
 	@Override
 	public void changePasswordById(long id, String password) {
-		jdbcTemplate.update("UPDATE Reader SET  password = ?  WHERE Reader.id  = ?", password, id);
+		jdbcTemplate.update("UPDATE Reader SET password = ?  WHERE Reader.id  = ? ; ", password, id);
 
-	}
+	} 
+
+	
 }

@@ -24,4 +24,6 @@ public interface ReaderDao {
 	
 	public void changePasswordById(long id, String password);
 
+
+
 }
