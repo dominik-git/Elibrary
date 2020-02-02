@@ -38,9 +38,10 @@ public class AddCategoryController {
 
 	private ObservableList<Category> categories = FXCollections.observableArrayList();
 
-	private Boolean isEdit;
-
-	private Category category;
+	@FXML
+	void onCategoryDelete(ActionEvent event) {
+		
+	}
 
 	@FXML
 	void onClickAddCategory(ActionEvent event) {
