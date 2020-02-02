@@ -5,6 +5,18 @@ import java.time.LocalDateTime;
 
 public class Book {
 	
+	public Book(Long id, String name, String author, String description, Category category, Date yearOfPublication) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.description = description;
+		this.category = category;
+		this.yearOfPublication = yearOfPublication;
+	}
+	public Book() {
+		// TODO Auto-generated constructor stub
+	}
 	private Long id;
 	private String name;
 	private String author;

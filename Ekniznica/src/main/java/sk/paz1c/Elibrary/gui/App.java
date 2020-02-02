@@ -33,10 +33,6 @@ public class App extends Application{
 	}
 
 	public static void main(String[] args) {
-		
-//		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//		Date date = new Date();
-//		System.out.println(date.);
 		launch(args);
 	}
 }

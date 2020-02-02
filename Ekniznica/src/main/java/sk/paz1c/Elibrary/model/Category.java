@@ -1,9 +1,20 @@
 package sk.paz1c.Elibrary.model;
 
 public class Category {
+	
+	public Category() {
+	}
+	
+	public Category(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
 	private Long id;
 	private String name;
 
+	
 	public Long getId() {
 		return id;
 	}
