@@ -92,6 +92,10 @@ public class ReadersTableAdminController {
 		TableColumn<Reader, String> genderCol = new TableColumn<>("Gender");
 		genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
 		readersTableView.getColumns().add(genderCol);
+		
+		TableColumn<Reader, String> readerIdCol = new TableColumn<>("Reader Id");
+		readerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+		readersTableView.getColumns().add(readerIdCol);
 
 		// add click listener on row
 		readersTableView.setOnMouseClicked((MouseEvent event) -> {
@@ -134,6 +138,11 @@ public class ReadersTableAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		List<Reader> result = DaoFactory.INSTANCE.getReaderDao().getAllReaders();
+		readers = FXCollections.observableArrayList(result);
+		// get all readers
+		// make arrayList as observable list
+		readersTableView.setItems(readers);
 	}
 
 	private void openReaderProfileModal(Reader reader) {
@@ -152,5 +161,10 @@ public class ReadersTableAdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		List<Reader> result = DaoFactory.INSTANCE.getReaderDao().getAllReaders();
+		readers = FXCollections.observableArrayList(result);
+		// get all readers
+		// make arrayList as observable list
+		readersTableView.setItems(readers);
 	}
 }

@@ -51,6 +51,15 @@ public class ReaderProfile {
 	
 	@FXML
 	private Button addBookButton;
+	
+	@FXML
+    private Button deleteReader;
+	
+	@FXML
+    void onDeleteReader(ActionEvent event) {
+		DaoFactory.INSTANCE.getReaderDao().deleteReaderById(reader.getId());
+		deleteReader.getScene().getWindow().hide();
+    }
 
 	
 	@FXML
@@ -74,7 +83,7 @@ public class ReaderProfile {
 		rentedBookTable.setItems(rentedBooks);
 
 		TableColumn<RentedBook, String> nameBookCol = new TableColumn<>("Name");
-		nameBookCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		nameBookCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBook().getName()));
 		rentedBookTable.getColumns().add(nameBookCol);
 
 		TableColumn<RentedBook, String> catCol = new TableColumn<>("Category");
@@ -133,7 +142,9 @@ public class ReaderProfile {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							rentedBookTable.refresh();
+							List<RentedBook> newResult = DaoFactory.INSTANCE.getRentedBookDao().getNonReturnedRentedBookByReaderId(reader.getId());
+							rentedBooks = FXCollections.observableArrayList(newResult);
+							rentedBookTable.setItems(rentedBooks);
 						}
 
 					}

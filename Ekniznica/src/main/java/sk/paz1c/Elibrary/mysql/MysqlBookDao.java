@@ -146,7 +146,7 @@ public class MysqlBookDao implements BookDao {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT Book.id as id, Book.name as name, Book.author as author,");
 		builder.append(
-				" Book.description as description, Book.year_of_publication as year_of_publication, Category.id categoryId Category.name as catName");
+				" Book.description as description, Book.year_of_publication as year_of_publication, Category.id categoryId ");
 		builder.append(" FROM Book inner join Category " + "on Book.category_id = Category.id ");
 		builder.append(" where Book.name like ");
 		builder.append("\"%" + name + "%\"; ");

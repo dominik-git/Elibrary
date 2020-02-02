@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="categoryTable" layoutX="30.0" layoutY="102.0" onMouseClicked="#rowClicked" prefHeight="334.0" prefWidth="583.0" />
+      <Button fx:id="addCategory" layoutX="513.0" layoutY="33.0" mnemonicParsing="false" onAction="#onAddCategory" text="Add category" />
+      <Label layoutX="271.0" layoutY="22.0" prefHeight="17.0" prefWidth="101.0" text="Category">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

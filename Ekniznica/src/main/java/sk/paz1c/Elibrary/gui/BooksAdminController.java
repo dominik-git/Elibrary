@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -155,11 +154,10 @@ public class BooksAdminController {
 	}
 
 	private void openCategoryModal() {
-		// pass readers list to constructor, when we create new user in
-		// CreateReaderController , table of readers will re-render
-		AddCategoryController controller = new AddCategoryController();
+		
+		CategoryController controller = new CategoryController();
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("createCategoryView.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("categoryWindow.fxml"));
 			fxmlLoader.setController(controller);
 			Parent parent = fxmlLoader.load();
 			Scene scene = new Scene(parent);

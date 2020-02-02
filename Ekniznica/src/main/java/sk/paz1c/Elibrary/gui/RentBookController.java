@@ -22,6 +22,8 @@ import sk.paz1c.Elibrary.model.Reader;
 import sk.paz1c.Elibrary.mysql.DaoFactory;
 
 public class RentBookController {
+	
+	private List<Category> categories; 
 
 	@FXML
 	private TextField nameBookField;
@@ -111,9 +113,13 @@ public class RentBookController {
 
 		bookDatePicker.setValue(localDate);
 
-		List<Category> result = DaoFactory.INSTANCE.getCategoryDao().getAllCategories();
-		ObservableList<Category> categories = FXCollections.observableArrayList(result);
-		categoryChoiceBox.setItems(categories);
+		categories = DaoFactory.INSTANCE.getCategoryDao().getAllCategories();
+		ObservableList<Category> result = FXCollections.observableArrayList(categories);
+		categoryChoiceBox.setItems(result);
+		int index = findIndex();
+		categoryChoiceBox.getSelectionModel().select(index);
+
+		
 
 		categoryChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
 			@Override
@@ -136,6 +142,7 @@ public class RentBookController {
 			saveBookButton.setDisable(false);
 			deleteBookButton.setDisable(false);
 			rentButton.setDisable(true);
+			rentBookField.setDisable(true);
 
 		} else {
 			authorField.setDisable(true);
@@ -145,8 +152,20 @@ public class RentBookController {
 			categoryChoiceBox.setDisable(true);
 			saveBookButton.setDisable(true);
 			deleteBookButton.setDisable(true);
+			rentBookField.setDisable(false);
 		}
 		isEditable = !isEditable;
 
+	}
+	private int findIndex() {
+		Long id = book.getCategory().getId();
+		int possition = 0;
+		
+		for (int i = 0; i < categories.size(); i++) {
+			if(categories.get(i).getId() == id) {
+				possition =i;
+			}
+		}
+		return possition;
 	}
 }

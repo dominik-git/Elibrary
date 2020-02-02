@@ -32,27 +32,34 @@ public class AddCategoryController {
 	private Button addCategoryButton;
 
 	private Category newCategory = new Category();
+	
+	@FXML
+	private Button deleteButton;
+
 	private ObservableList<Category> categories = FXCollections.observableArrayList();
 
+	private Boolean isEdit;
+
+	private Category category;
+
 	@FXML
-	void onClickAddCategory(ActionEvent event) {		
-		if(categoryNameTextField.getText().isEmpty()) {	
+	void onClickAddCategory(ActionEvent event) {
+		if (categoryNameTextField.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("You have to fill all inputs!");
 			alert.showAndWait();
-		}else {
+		} else {
+
 			newCategory.setName(categoryNameTextField.getText());
 			Category category = DaoFactory.INSTANCE.getCategoryDao().addCategory(newCategory);
-			categories.add(category);
 			addCategoryButton.getScene().getWindow().hide();
 		}
 	}
+	 @FXML
+	    void initialize() {
+		 deleteButton.setVisible(false);
 
-	@FXML
-	void initialize() {
-		List<Category> result = DaoFactory.INSTANCE.getCategoryDao().getAllCategories();
-		categories = FXCollections.observableArrayList(result);
-	}
+	    }
 }

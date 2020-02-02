@@ -111,8 +111,9 @@ public class MysqlCategoryDao implements CategoryDao {
 
 	@Override
 	public Category updateCategory(Category category) {
+		System.out.println(category.getName()+" mysql "+ category.getId());
 		jdbcTemplate.update(
-				"UPDATE Category SET  name =? WHERE Category.id  = ? ",
+				"UPDATE Category SET  name = ? WHERE Category.id  = ? ",
 				category.getName(),category.getId());
 		return category;
 	}
