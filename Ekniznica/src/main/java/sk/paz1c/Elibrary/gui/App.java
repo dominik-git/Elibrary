@@ -26,13 +26,15 @@ public class App extends Application{
 		Parent parent = fxmlLoader.load();
 		
 		Scene scene = new Scene(parent);
-//		scene.getStylesheets().add(App.class.getResource("Main.css").toExternalForm());
+
 		
 		window.setScene(scene);
 		window.show();
 	}
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
+
 }

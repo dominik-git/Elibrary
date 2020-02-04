@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="801.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="801.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="301.0" layoutY="14.0" text="YOUR RENTED BOOKS">
          <font>
             <Font size="20.0" />
          </font></Label>
       <TableView fx:id="rentedBookTable" layoutX="14.0" layoutY="58.0" prefHeight="470.0" prefWidth="772.0" />
+      <Button fx:id="openPasswordModal" layoutX="645.0" layoutY="12.0" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="26.0" prefWidth="141.0" text="Change password" />
    </children>
 </AnchorPane>

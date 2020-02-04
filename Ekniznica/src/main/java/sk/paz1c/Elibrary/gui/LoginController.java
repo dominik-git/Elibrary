@@ -40,8 +40,8 @@ public class LoginController {
 			if (reader.getAdmin() == true) {
 				loadAdminView();
 			} else {
-				loadNoAdminView(reader.getName());
-				
+				loadNoAdminView(reader.getName(), reader.getId());
+
 			}
 
 		}
@@ -57,8 +57,8 @@ public class LoginController {
 		System.out.println("init");
 	}
 
-	private void loadNoAdminView(String name) {
-		NoAdminViewController controller = new NoAdminViewController(name);
+	private void loadNoAdminView(String name, Long id) {
+		NoAdminViewController controller = new NoAdminViewController(name, id);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("noAdminView.fxml"));
 		fxmlLoader.setController(controller);
 		showScene(fxmlLoader);
@@ -74,6 +74,7 @@ public class LoginController {
 	}
 
 	private void showScene(FXMLLoader fxmlLoader) {
+
 		try {
 			Parent parent = fxmlLoader.load();
 			Scene scene = new Scene(parent);
