@@ -85,7 +85,13 @@ public class RentedBookAdminController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			rentedBookTableView.refresh();
+			List<RentedBook> result = DaoFactory.INSTANCE.getRentedBookDao().getAllRentedBooksForAdmin();
+			rentedBooks = FXCollections.observableArrayList(result);
+
+			// make array list as observable list, that means if something will change you
+			// should see changes immediately change without refresh
+			
+			rentedBookTableView.setItems(rentedBooks);
 		}
 		// refresh table
 

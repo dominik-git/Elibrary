@@ -59,7 +59,7 @@ public class CreateReaderController extends ReadersTableAdminController {
 		reader.mapFxReaderToReader(readerFxModel);
 		// call save reader and DaoFactory.INSTANCE.getReaderDao().saveReader returns saved reader
 		Reader savedReader = DaoFactory.INSTANCE.getReaderDao().saveReader(reader);
-		SendEmail.sendMail(reader.getUsername(),reader.getPassword());
+		SendEmail.sendMail(reader.getUsername(),reader.getPassword(),reader.getEmail());
 		readersList.add(savedReader);
 		// callback.methodToCallBack(savedReader);
 		// hide current window

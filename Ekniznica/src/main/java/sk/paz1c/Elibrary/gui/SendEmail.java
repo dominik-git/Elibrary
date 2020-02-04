@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class SendEmail {
 
-	public static void sendMail(String usernameReader,String passwordReader) {
+	public static void sendMail(String usernameReader,String passwordReader,String email) {
 		final String username = "testekniznica@gmail.com";
 		final String password = "programko123";
 
@@ -35,7 +35,7 @@ public class SendEmail {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("testekniznica@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("dmnk.kolesar@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			message.setSubject("E-library credentials");
 			message.setText("Your username is: " +usernameReader+" your password is:"+passwordReader);
 
